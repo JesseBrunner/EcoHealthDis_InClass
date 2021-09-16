@@ -1,0 +1,92 @@
+---
+title: "Stepping back: how can we characterize a study?"
+author: "Jesse Brunner"
+date: "`r Sys.Date()`"
+output: tint::tintPdf
+latexfonts:
+  - package: newtxmath
+    options: 
+      - cmintegrals
+      - cmbraces
+  - package: ebgaramond-maths
+header-includes:
+   - \usepackage{booktabs}
+   - \usepackage{cancel}
+---
+
+```{r setup, include=FALSE}
+library(tufte)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, 
+                      message = FALSE, 
+                      warning = FALSE,
+                      echo = FALSE,
+                      cache.extra = packageVersion('tufte'))
+options(htmltools.dir.version = FALSE)
+```
+
+```{r, include=FALSE}
+# library(tidyverse)
+# library(scales) # for prettier axis labels
+# library(simecol) # for running model 
+# theme_set(theme_minimal())
+```
+
+# Meta questions
+In this class we will be reading, and often designing, scientific studies. These may be clever lab experiments, epidemiological surveys, meta-analyses, or models. It is very easy to get wrapped up in the details about _how_ a study is done---and that is important---but we should also being asked meta^["denoting something of a higher or second-order kind" according to my dictionary, as in _metacognition_, which is "awareness and understanding of one's own thought processes."] questions about the studies goals and other qualities. 
+
+Here is a partial list of questions we should ask:
+
+## What kind of study is it?
+  * Does it test an a priori hypothesis?
+  * Does it look for associations consistent with an idea?
+	  * Is it a fishing trip, seeing what might be found in the data?
+  * Does it predict or project?
+  * Experiment, observational study, natural experiment, ...?
+
+## What are the units of study?
+  * Samples from within or on an individual?
+  * Individuals
+  * Types or groups of people? (e.g., sex, education level)
+  * Populations? Facilities?
+  * Regions? (county, state, nation, continent)
+
+## What is being compared? 
+  * Control vs. Treatment
+  * Before vs. After
+  * Different groups
+  * Response to increasing/decreasing exposure
+  * Other?
+
+
+
+## What is the goal of the study?
+  * Understand mechanism: Asks, does this work?
+  * Understand magnitude: Asks, is the response weak or strong?
+  * Understand spatial or temporal extent: Asks, where and when is there an association?
+  * Understand the consequences of something: Asks, what happens if this were so?
+
+## What is the scale of the study?
+  * Individuals? Population?
+  * Local? Regional? Global?
+  * Short-term? Long-term?
+
+## What is the degree of control?
+  * Tight control/laboratory
+  * Participants/volunteers encouraged
+  * Treatment applied on top of natural variation
+  * Observational/no control
+
+## What is the scale of inference? 
+  * How realistic or natural is the setting? 
+  * Are the subjects representative? Of whom or what?
+
+Please add your own along the way and share them with me and others.
+
+# Associations and trade-offs
+
+As you start to ask these questions, you may realize that there are certain traits that seem to go together and others that seem like opposites. For instance, it seems fairly intuitive that it is much easier to gain tight experimental control in a laboratory setting with a few individuals, but the setting is likely to be very unnatural, whereas a study done in nature offers a great deal of realism, but little opportunity for control.
+
+It is very helpful to try to draw out these associations and contrasts. They will also help you see trade-offs, like the control-realism trade-off I just illustrated, in designing an experiment. A single study cannot do everything perfectly all at once, and so scientists must decide what it is that they value most for their purposes. This will help you better evaluate what they have to offer.
+
+Please add your own associations and trade-offs.
