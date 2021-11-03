@@ -1,0 +1,149 @@
+---
+title: "In class exercise: Establishing Detection Thresholds"
+author: "Jesse Brunner"
+# date: "`r Sys.Date()`"
+output: tint::tintPdf
+latexfonts:
+  - package: newtxmath
+    options: 
+      - cmintegrals
+      - cmbraces
+  - package: ebgaramond-maths
+header-includes:
+   - \usepackage{booktabs}
+   - \usepackage{cancel}
+---
+
+```{r setup, include=FALSE}
+library(tufte)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, 
+                      message = FALSE, 
+                      warning = FALSE,
+                      echo = FALSE,
+                      cache.extra = packageVersion('tufte'))
+options(htmltools.dir.version = FALSE)
+```
+
+```{r, include=FALSE}
+library(tidyverse)
+# library(scales) # for prettier axis labels
+# library(simecol) # for running model 
+# theme_set(theme_minimal())
+```
+
+
+# A motivating example: _Bd_ and _Bsal_
+
+`r newthought("We import hundreds of millions")` of live animals into the United States every year^[Smith, K. et al. Summarizing US wildlife trade with an eye toward assessing the risk of infectious disease introduction. EcoHealth 14, 29–39 (2017).]. Even if some small fraction of those individuals harbor a disease we care about, that amounts to a fire-hose of introduced infections! In class today, let's focus on amphibian pathogens. 
+
+> The amphibian chytrid fungus, _Batrachochytrium dendrobatidis_ (Bd), is the most devastating emerging pathogen on record, responsible for declines in over 500 species, including 90 that are likely extinct. It likely owes its global distribution in large measure to the international trade of African clawed frogs (_Xenopus laevis_) used for pregnancy tests and research, American bullfrogs (_Lithobates catesbeianus_) sold for food, and myriad species involved in the pet trade. More recently, the international pet trade aided the emergence of a novel chytrid fungus, _B. salamandrivorans_ (Bsal), that is particularly lethal to salamanders.
+
+>Bsal was introduced into Northern Europe via the pet trade from Southeast Asia. While it has not yet been detected in the wild in much of Europe, it is already prevalent in and appears to have spread among private collections in Europe. In North America, a hot-spot of salamander diversity, Bsal is apparently absent from both wild and captive amphibians. However, the risk and potentially devastating consequences of its introduction via trade led to prohibitions on the importation of 201 species of salamanders into the U.S.A. and all salamanders in Canada.
+
+
+`r tint::quote_footer('--- Jesse L. Brunner^[Brunner JL (2020) Pooled samples and eDNA-based detection can facilitate the "clean trade" of aquatic animals. Scientific Reports 10:10280]')`
+
+
+All of which is to say, detecting pathogens at the borders, in captive collections, and generally everywhere amphibians are held or moved is really important. There are two problems facing us. The first is the magnitude of the trade, which is, as I noted above, daunting. We will set this aside for the moment, but suffice to say there are many people working on it^[Feel free to ask me about it!]. 
+
+The second issue is that we are often trying to detect low-levels of rare infections. This is sort of the sweet-spot for confusion. Low-level infections produce weak signals, which can be hard to distinguish from background levels of signal^[Is that a band on my electrophoresis gel or a shadow? Do I need to get my eyes checked?!]. Also, because infections are rare there are probably very few real infections to detect, making us justifiably wonder if what we are seeing is real or not. It is this second problem we are going to tackle today. 
+
+# Playing with real^[Made up.] data
+`r newthought("Imagine we have")` the following data from a qPCR^[Remember the quantitative Taqman realtime polymerase chain reaction we talked about in class? Lasers shining in to tubes with exponentially growing populations of particular DNA molecules?] diagnostic test for _Bsal._ Remember that "Ct" is the cycle threshold, the PCR cycle where the fluorescence crosses some threshold where we can agree it is (likely) real. Each bar represents samples with a given Ct value. Each sample is from an individual that was either experimentally infected (gray) or left uninfected (white).  Notice that we only run this out for 40 cycles, so there is a large bar above 40, representing all the samples that never crossed the threshold. Also note that have broken out the data in half-cycle steps.
+
+```{r, fig.width = 8, fig.height = 3, fig.fullwidth = TRUE}
+set.seed(101)
+df <- tibble(Treatment = rep(c("infected", "control"), each = 50), 
+       Ct = c(rnorm(50, mean = 35, sd = 3), rnorm(50, mean = 40, sd = 2.25))
+) %>% 
+  mutate(Ct = ifelse(Ct > 40, 41, Ct))
+
+
+ggplot(df, aes(Ct, fill = Treatment)) + 
+  geom_histogram(position = "stack", #center = 0.5,
+                 binwidth = 1/2, 
+                 alpha = 1/2, color = "black") + 
+  scale_fill_manual(values = c("white", "gray")) +
+  scale_x_continuous(breaks = 25:41) + 
+  scale_y_continuous(minor_breaks = 0:50) 
+```
+
+Given these data, fill in this table showing how many true positives (infected animals testing positive; TP), false positives (control animals testing positive; FP), true negatives (control animals testing negative; TN), and false negatives (infected animals testing negative; FN) we would have if we used each of the Ct values as our cutoff. Remember: anything _less than or equal to_ the cutoff is considered positive. 
+```{r}
+# create table with Ct values along rows and numbers in columns
+CTs = ( 80:(2*round(10*min(df$Ct[df$Treatment=="control"]))/10-1) )/2
+TP <- FP <- TN <- FN <- Sensitivity <- Specificity <- numeric(length(CTs))
+df2 <- tibble(Ct = CTs, TP, FP, TN, FN, Sensitivity, Specificity)
+```
+
+```{r}
+library(kableExtra)
+knitr::kable(df2) %>% 
+  kable_styling(bootstrap_options = "striped",
+                full_width = TRUE) %>% 
+  column_spec(2:7, color = "white")
+```
+
+Next, we need to convert these numbers into our estimates of **sensitivity**, or the proportion of infected individuals that are correctly scored as positive, and **specificity**, which is the proportion of uninfected individuals that are correctly scored as negative. Add these estimates to the table.
+
+```{r}
+# fill in actual values
+for(i in 1: length(CTs)){
+  TP[i] <- sum(df$Ct[df$Treatment=="infected"] <= CTs[i])
+  FP[i] <- sum(df$Ct[df$Treatment=="control"] <= CTs[i])
+  TN[i] <- sum(df$Ct[df$Treatment=="control"] > CTs[i])
+  FN[i] <- sum(df$Ct[df$Treatment=="infected"] > CTs[i])
+}
+df2 <- tibble(Ct = CTs, TP, FP, TN, FN) %>% 
+  mutate(Sensitivity = TP/(TP + FN),
+         Specificity = TN/(TN + FP))
+```
+
+`r newthought("Finally, we have")` the numbers we need to construct an ROC plot. Simply place a point on the axes below corresponding to the Sensitivity and Specificity of each potential cutoff (Ct threshold). Bonus points if you label each point with the corresponding cutoff.
+
+```{r, fig.width = 8, fig.height = 8, fig.fullwidth = TRUE}
+dfr <- tibble(Threshold = seq(0,100, length.out = 11),
+             Specificity = (0:10)/10,#pnorm(q=Threshold, mean=30, sd=10, lower.tail=T),
+             Sensitivity = (10:0)/10#pnorm(q=Threshold, mean=60, sd=10, lower.tail = F)) 
+)
+
+ggplot(dfr, aes(Specificity, Sensitivity)) + 
+  geom_line(linetype = 3) + 
+  scale_x_reverse("Specificity",
+                  breaks = 0:10/10,
+                  minor_breaks = 0:50/50,
+                  sec.axis = sec_axis(~ 1- ., name="False positive rate")) + 
+  scale_y_continuous("Sensitivity",
+                     breaks = 0:10/10,
+                     minor_breaks = 0:50/50,
+                     sec.axis = sec_axis(~ 1- ., name="False negative rate")) +
+  geom_abline(slope=1, intercept=1, linetype=3, color="gray30") +
+  coord_equal()
+```
+
+```{r, include = FALSE}
+ggplot(df2, aes(Specificity, Sensitivity)) + 
+  geom_line(linetype = 3) + 
+  geom_point() + 
+  geom_text(aes(label = Ct), hjust = 0, nudge_x = 0.015, nudge_y = -0.025) + 
+  scale_x_reverse("Specificity",
+                  breaks = 0:10/10,
+                  minor_breaks = 0:50/50,
+                  sec.axis = sec_axis(~ 1- ., name="False positive rate")) + 
+  scale_y_continuous("Sensitivity",
+                     breaks = 0:10/10,
+                     minor_breaks = 0:50/50,
+                     sec.axis = sec_axis(~ 1- ., name="False negative rate")) +
+  geom_abline(slope=1, intercept=1, linetype=3, color="gray30") +
+  coord_equal(ylim = c(0,1), xlim=c(1,0))
+```
+
+After plotting your estimates, connect the dots, as it were, and extend the lines all the way to specificity of zero and all the way to sensitivity to zero.  Congratulations! You have just made an ROC curve!
+
+This should help you visualize the inherent trade-off in setting a cutoff: we can increase sensitivity, but this comes at the cost of reduced specificity, and vice versa.
+
+# What would you do?
+
+Now, the Big Question: If you were in charge of defining the parameters of a diagnostic qPCR test that was going to be used at the borders of our country to detect _Bsal_ in imported animals, what threshold would you use? What are you trying to maximize and minimize? What are you gaining? At what cost?
+
