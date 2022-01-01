@@ -1,0 +1,135 @@
+---
+title: "How does transmission scale with density? The case of robopox"
+author: "Jesse Brunner (inspired by a lab by [David Civitello](https://www.esa.org/disease/resources/syllabi/))"
+date: "`r Sys.Date()`"
+output: tint::tintPdf
+latexfonts:
+  - package: newtxmath
+    options: 
+      - cmintegrals
+      - cmbraces
+  - package: ebgaramond-maths
+header-includes:
+   - \usepackage{booktabs}
+   - \usepackage{cancel}
+---
+
+```{r setup, include=FALSE}
+library(tufte)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, 
+                      message = FALSE, 
+                      warning = FALSE,
+                      echo = FALSE,
+                      cache.extra = packageVersion('tufte'))
+options(htmltools.dir.version = FALSE)
+```
+
+```{r, include=FALSE}
+library(tidyverse)
+# library(scales) # for prettier axis labels
+# library(simecol) # for running model 
+# theme_set(theme_minimal())
+```
+
+# What's at the heart of transmission rates?
+
+You will undoubtedly recall that transmission is both fundamental in the spread (and dynamics and evolution) of infectious agents. You will also, I am very confident in assuming, recall^[Yes, that is a whiff of sarcasm you are detecting. Remember, I was once in your seats and did not "get" or like all of the  models instructors kept asking me to think about. But stay with me.] that we can think of the transmission process as a series of steps, and we can write these out mathematically to describe the rate of transmission, as:
+
+$$
+S \times c(N) \times \frac{I}{N} \times \pi, 
+$$
+which can be read, from left to right, as susceptible hosts ($S$) contacting other hosts at some rate, which likely is a function of the overall size of the population ($c(N)$), some fraction of which are with infectious individuals ($I/N$), and each of which has some probability of causing an infection ($\pi$).
+
+For our purposes now, we can see that the fraction of the population that is infectious ($I/N$) is a product of the preceding dynamics (e.g., how many have been infected and remain infectious up until now) and the probability of an infectious contact causing an infection ($\pi$) is probably reasonably constant. That is, they're boring, at least at a certain scale. All the interesting stuff happens in that contact rate,  $c(N)$. I showed you in the past that how we think this works can have pretty dramatic impacts on how the infection might spread, as well as how we might effectively intervene. But let's get concrete with an example. 
+
+# Hexbug contact rate and the spread of Robopox
+
+```{r, fig.margin = TRUE}
+knitr::include_graphics("Hexbug.png", dpi = 300)
+```
+
+Let's imagine we are interested in studying the spread of the dreaded Robopox through Hexbug populations. These Hexbugs are fairly simple creatures, simply moving by random impulses, though some researchers remain convinced they have "personalities." This is convenient because Robopox is transmitted by casual contact^[Any casual contact between a susceptible and infectious Hexbug has a probability $\pi = 0.02$ of causing a new infection.]. Let us further imagine the Center for Electromechanical Disease and Prevention (CEDC) has come to you to understand Robopox transmission and how best to intervene. In particular, they wish to know whether or how Hexbug densities affect transmission rates. 
+
+We will conduct the experiment in short order, but first, what are your predictions? In graphical form, the question is, how do you think contact rates ($c(N)$) vary with the density of Hexbugs ($N$)? 
+
+Go ahead and draw your prediction on the axes provided on the next page, and label them "prediction". Be sure to think about _why_ you expect these results.
+
+```{r, fig.fullwidth = TRUE}
+df <- tibble(Density = c(0,40),
+             Contacts = c(0,40))
+
+ggplot(df, aes(x=Density, y=Contacts)) +
+  geom_blank() +
+  labs(x="Density (number of Hexbugs in the arena)",
+       y="Contacts per minute") +
+  scale_y_continuous(minor_breaks = 0:40) + 
+  scale_x_continuous(minor_breaks = 0:40) 
+```
+
+# The experiment
+
+Our goal, as a class, is to test your predictions and describe the relationship between contact rates and density. We have 40 Hexbugs to play with^[These were purchased solely for this little exercise and not at all for me to play with in my office.]. What we need to do is design our experiment. In your group, sketch out the experimental design considering which densities you want to use, how long a trial will run, how you will estimate contact rates, etc..
+
+Densities:  
+
+\vspace{1cm}
+
+Trial duration:
+\vspace{1cm}
+
+Estimating contacts:
+\vspace{1.5cm}
+
+Other considerations:
+\vspace{1cm}
+
+Once we have these sorted out, we'll run the experiment in class.
+
+# Results
+
+You can use this table to keep track of the results (or as inspiration if it does not quite fit your design).
+
+| Density | Est. 1 | Est. 2 | Est 3 | Est. 4 | Est. 5 | Mean |
+|---------|--------|--------|-------|--------|--------|------|
+|         |        |        |       |        |        |      |
+|         |        |        |       |        |        |      |
+|         |        |        |       |        |        |      |
+|         |        |        |       |        |        |      |
+|         |        |        |       |        |        |      |
+|         |        |        |       |        |        |      |
+|         |        |        |       |        |        |      |
+|         |        |        |       |        |        |      |
+|         |        |        |       |        |        |      |
+|         |        |        |       |        |        |      |
+|         |        |        |       |        |        |      |
+|         |        |        |       |        |        |      |
+|         |        |        |       |        |        |      |
+|         |        |        |       |        |        |      |
+|         |        |        |       |        |        |      |
+|         |        |        |       |        |        |      |
+|         |        |        |       |        |        |      |
+|         |        |        |       |        |        |      |
+|         |        |        |       |        |        |      |
+|         |        |        |       |        |        |      |
+|         |        |        |       |        |        |      |
+|         |        |        |       |        |        |      |
+
+
+Once the data are collated, please plot the data on the axes provided on the previous page. Then answer the following questions
+
+
+* How do the data relate to your prediction? Did you nail it? Why or why not?
+\vspace{0.5cm}
+
+* In your report to the CEDC, what will you have to say about the relationship between contact rates and density? 
+
+\vspace{1.cm}
+
+* What caveats or factors should be considered when weighing your answer? Are their limits to your conclusions or reasons to be careful about using them?
+
+\vspace{0.5cm}
+* If you could do one more experiment, what would it be and why?
+
+
+
