@@ -1,0 +1,93 @@
+---
+title: "In class exercise: Ecology Rocks"
+author: "Jesse Brunner"
+# date: "`r Sys.Date()`"
+output: tint::tintPdf
+latexfonts:
+  - package: newtxmath
+    options: 
+      - cmintegrals
+      - cmbraces
+  - package: ebgaramond-maths
+header-includes:
+   - \usepackage{booktabs}
+   - \usepackage{cancel}
+---
+
+```{r setup, include=FALSE}
+library(tufte)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, 
+                      message = FALSE, 
+                      warning = FALSE,
+                      echo = FALSE,
+                      cache.extra = packageVersion('tufte'))
+options(htmltools.dir.version = FALSE)
+```
+
+```{r, include=FALSE}
+library(tidyverse)
+# library(scales) # for prettier axis labels
+# library(simecol) # for running model 
+# theme_set(theme_minimal())
+```
+
+`r newthought("You should have before you")`:
+
+* a pile or bin of "craft beads," each with a letter
+* a bit of cord on which to string the letters 
+
+Can you guess what we're going to do?! We're going to make bracelets! 
+
+`r newthought("But this is an ecology class")`, meaning we cannot just make bracelets without having some point to it. 
+
+So, _first_, the bracelets need to say, **"Ecology rocks"**^[This really needs an exclamation mark at the end, but I couldn't find them at the craft store.]. 
+
+_Second_, let us pretend that our tables are cells---the simple little _Bracchionaria_---the bracelets are copies of a key protein^[So beads are amino acids, right?] and all of you around the table are their enzymes or similar helping them replicate. The beads on the table will be like the chemical nutrients (amino acids) available to the _Bracchionaria_, or think of it as the primordial ooze from which early bacteria arose^[This analogy is getting stretched pretty thin, wouldn't you say?].
+
+_Third_, we need to take data. We will measure the time, in seconds, it takes your group to create one bracelet for each of you. (We will balance the tables so they have the same number of people at them.)
+
+Ready?
+
+## Trial one---the shake out
+
+![](WhiteSpace.png)
+
+_At this point, I'm guessing different groups have different strategies. Let's discuss those strategies and then settle on one approach all groups will use._
+
+## Trial two---the baseline
+
+![](WhiteSpace.png)
+
+## Trial three---baseline + ____ O's
+
+![](WhiteSpace.png)
+
+## Trial four---baseline + ____ O's
+
+![](WhiteSpace.png)
+
+
+\newpage
+## Putting it all together (this will make sense later)
+
+
+```{r, fig.fullwidth = TRUE}
+df <- tibble(Fertilizer = c(0,20),
+             Time = c(0,60*3))
+
+ggplot(df, aes(x=Fertilizer, y=Time)) +
+  geom_blank() +
+  labs(x="Additional \"O\"s",
+       y="Time to completion") +
+  scale_x_continuous(minor_breaks = 0:20) + 
+  scale_y_continuous(minor_breaks =  0:36*5) + 
+  theme_bw()
+```
+
+
+## Questions to ask:
+
+* What lessons are we learning from this exercise?
+* That was realistic about this exercise? That is, what made it a good analogy?
+* What was unrealistic about this exercise? 

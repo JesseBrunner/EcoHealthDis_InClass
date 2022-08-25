@@ -34,7 +34,7 @@ library(tidyverse)
 
 # What's at the heart of transmission rates?
 
-You will undoubtedly recall that transmission is both fundamental in the spread (and dynamics and evolution) of infectious agents. You will also, I am very confident in assuming, recall^[Yes, that is a whiff of sarcasm you are detecting. Remember, I was once in your seats and did not "get" or like all of the  models instructors kept asking me to think about. But stay with me.] that we can think of the transmission process as a series of steps, and we can write these out mathematically to describe the rate of transmission, as:
+You will undoubtedly recall that transmission is fundamental to the spread (and dynamics and evolution) of infectious agents. You will also no doubt recall^[Yes, that is a whiff of sarcasm you are detecting. Remember, I was once in your seats and did not "get" or like all of the  models instructors kept asking me to think about. But stay with me.] that we can think of the transmission process as a series of steps, and we can write out these steps mathematically to describe the rate of transmission. For instance, the rate of transmission can be described as:
 
 $$
 S \times c(N) \times \frac{I}{N} \times \pi, 
@@ -49,7 +49,7 @@ For our purposes now, we can see that the fraction of the population that is inf
 knitr::include_graphics("Hexbug.png", dpi = 300)
 ```
 
-Let's imagine we are interested in studying the spread of the dreaded Robopox through Hexbug populations. These Hexbugs are fairly simple creatures, simply moving by random impulses, though some researchers remain convinced they have "personalities." This is convenient because Robopox is transmitted by casual contact^[Any casual contact between a susceptible and infectious Hexbug has a probability $\pi = 0.02$ of causing a new infection.]. Let us further imagine the Center for Electromechanical Disease and Prevention (CEDC) has come to you to understand Robopox transmission and how best to intervene. In particular, they wish to know whether or how Hexbug densities affect transmission rates. 
+Let's imagine we are interested in studying the spread of the dreaded Robopox through Hexbug populations. These Hexbugs are fairly simple creatures, moving around by random impulses, though some researchers remain convinced they have "personalities." This is convenient because Robopox is transmitted by casual contact^[Any casual contact between a susceptible and infectious Hexbug has a probability $\pi = 0.02$ of causing a new infection.]. Let us further imagine the Center for Electromechanical Disease and Prevention (CEDC) has come to you to understand Robopox transmission and how best to intervene. In particular, they wish to know whether or how Hexbug densities affect transmission rates. 
 
 We will conduct the experiment in short order, but first, what are your predictions? In graphical form, the question is, how do you think contact rates ($c(N)$) vary with the density of Hexbugs ($N$)? 
 
