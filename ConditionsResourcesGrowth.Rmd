@@ -1,0 +1,76 @@
+---
+title: "Population growth under less than ideal circumstances"
+# author: "Jesse Brunner"
+# date: "`r Sys.Date()`"
+output: tint::tintPdf
+latexfonts:
+  - package: newtxmath
+    options: 
+      - cmintegrals
+      - cmbraces
+  - package: ebgaramond-maths
+header-includes:
+   - \usepackage{booktabs}
+   - \usepackage{cancel}
+   - \usepackage[version=4]{mhchem}
+---
+
+```{r setup, include=FALSE}
+library(tufte)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, 
+                      message = FALSE, 
+                      warning = FALSE,
+                      echo = FALSE,
+                      cache.extra = packageVersion('tufte'))
+options(htmltools.dir.version = FALSE)
+```
+
+```{r, include=FALSE}
+library(tidyverse)
+library(scales) # for prettier axis labels
+# library(simecol) # for running model 
+theme_set(theme_minimal())
+```
+
+One of our goals in this class is to make connections between topics or ideas. We have considered both resources and conditions as being important to organisms. We have contrasted them and we have connected them to the idea of a niche. But how, dear student, do these ideas connect to our model(s) of population growth?
+
+Recall our logistic model of population growth^[Which is imperfect, but useful for thinking through a lot of ideas.]:
+$$
+\frac{dN}{dt} = r \left( 1 - \frac{N}{k} \right)
+$$
+
+Now consider:
+
+*  What happens to population growth ($dN/dt$) when conditions are good vs. poor? 
+*  What happens to population growth ($dN/dt$) when resources are abundance or limiting?
+*  Do these change $r$ or $k$ or both? Why?
+
+Our goal today is to sort out some of this in our heads.
+
+# Temperature-performance curves
+
+1.  Since temperature is so fundamental^[And I've made such a big deal about it] let's start by drawing a temperature-performance curve.
+2.  Now think about whether the response variable (y-axis) more closely relates to the intrinsic growth rate or the "carrying capacity"^[Population density at which individuals _just_ replace themselves, on average.].
+3.  Now draw a graph showing three otherwise identical populations, growing logistically over time at either a low, moderate, or high temperature. (Three lines, each one corresponding to a population in a different temperature environment.)
+
+
+# Resource supplementation
+
+1.  Resources, like macronutrients, are also quite fundamental, so let's now draw a curve showing the growth of a species of plant or animal across a range of a limiting nutrient. (Could be plants raised with different levels of nitrogen fertilizer or _Daphnia_ grown with more or less N & P-rich algae as food or something else.)
+2. Now think about whether the response you are drawing (y-axis) is more closely related to the intrinsic growth rate or "carrying capacity". 
+3. Finally, draw a graph showing three otherwise identical populations, growing logistically over time at either a low, moderate, or high levels of this macronutrient. 
+
+`r newthought("Is there a simple relationship")` between conditions and $r$ or $k$? Between resources and $r$ or $k$? 
+
+
+# Niches and population growth
+
+1.  One more drawing, please. Draw a 2D niche corresponding to the temperature and nutrient relationships you just considered. 
+2.  Now on this 2D niche, please label the _areas_ of your 2D niche diagram where $dN/dt < 0$, $dN/dt \approx 0$, and $dN/dt > 0$. (Trust me, this is do-able. There should be some pretty clear correspondence if you think it through.)
+3.  Next, label the areas of the niche diagram where $r < 0$, $r \approx 0$, and $r > 0$. 
+4.  Finally, think about how $k$ changes as you move across the surface of your niche diagram. (There are not nice thresholds as for 2 & 3, but it is still useful to think about where $k$ might be small or large.)
+
+
+
+
