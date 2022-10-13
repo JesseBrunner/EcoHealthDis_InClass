@@ -37,7 +37,7 @@ One of our goals in this class is to make connections between topics or ideas. W
 
 Recall our logistic model of population growth^[Which is imperfect, but useful for thinking through a lot of ideas.]:
 $$
-\frac{dN}{dt} = r \left( 1 - \frac{N}{k} \right)
+\frac{dN}{dt} = rN \left( 1 - \frac{N}{k} \right)
 $$
 
 Now consider:
@@ -46,18 +46,18 @@ Now consider:
 *  What happens to population growth ($dN/dt$) when resources are abundance or limiting?
 *  Do these change $r$ or $k$ or both? Why?
 
-Our goal today is to sort out some of this in our heads.
+Our goal today is to sort out some of this on the whiteboard and in our heads.
 
 # Temperature-performance curves
 
 1.  Since temperature is so fundamental^[And I've made such a big deal about it] let's start by drawing a temperature-performance curve.
 2.  Now think about whether the response variable (y-axis) more closely relates to the intrinsic growth rate or the "carrying capacity"^[Population density at which individuals _just_ replace themselves, on average.].
-3.  Now draw a graph showing three otherwise identical populations, growing logistically over time at either a low, moderate, or high temperature. (Three lines, each one corresponding to a population in a different temperature environment.)
+3.  Finally, draw a graph showing three otherwise identical populations, growing logistically over time at either a low, moderate, or high temperature. (Three lines, each one corresponding to a population in a different temperature environment.)
 
 
 # Resource supplementation
 
-1.  Resources, like macronutrients, are also quite fundamental, so let's now draw a curve showing the growth of a species of plant or animal across a range of a limiting nutrient. (Could be plants raised with different levels of nitrogen fertilizer or _Daphnia_ grown with more or less N & P-rich algae as food or something else.)
+1.  Resources, like macronutrients, are also quite fundamental. Pick one you like to think about. (Could be plants and nitrogen fertilizer or _Daphnia_ grown with more or less N & P-rich algae as food or something else.) Then draw a curve showing the growth of this species across a range of a this nutrient. 
 2. Now think about whether the response you are drawing (y-axis) is more closely related to the intrinsic growth rate or "carrying capacity". 
 3. Finally, draw a graph showing three otherwise identical populations, growing logistically over time at either a low, moderate, or high levels of this macronutrient. 
 
