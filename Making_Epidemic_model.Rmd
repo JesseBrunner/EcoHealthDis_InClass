@@ -1,0 +1,77 @@
+---
+title: "Building a model of a (growing/shrinking) epidemic "
+# author: "Jesse Brunner"
+# date: "`r Sys.Date()`"
+output: tint::tintPdf
+latexfonts:
+  - package: newtxmath
+    options: 
+      - cmintegrals
+      - cmbraces
+  - package: ebgaramond-maths
+header-includes:
+   - \usepackage{booktabs}
+   - \usepackage{cancel}
+   - \usepackage[version=4]{mhchem}
+---
+
+```{r setup, include=FALSE}
+library(tufte)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, 
+                      message = FALSE, 
+                      warning = FALSE,
+                      echo = FALSE,
+                      cache.extra = packageVersion('tufte'))
+options(htmltools.dir.version = FALSE)
+```
+
+```{r, include=FALSE}
+library(tidyverse)
+library(scales) # for prettier axis labels
+# library(simecol) # for running model 
+theme_set(theme_minimal())
+```
+
+`r newthought("Parasites are awesome.")` That is a fact, but also a motivation for our activity today. Let's think about what a parasite "wants"^[Major scare quotes here. No one, to my knowledge, has figured out how to talk to a parasite to ask them what they want. Really, we're assuming based on first principles.] to do.  Taking a parasite's eye view^[Like a bird's eye view, but (usually) one from inside a host.], the "goal" is to leave a lot of offspring that in turn leave a lot of offspring. But its less important to make a lot of copies of itself in the host it is in---they are, in a sense, competitors, not to mention the problems if this host dies or is killed---than it is to cause a lot of new infections in new hosts. Indeed, we have seen and briefly discussed this idea in the guise of $R_0$, which we can define as the number of secondary infections caused by a single infected individual over the span of that infection^[...in a wholly susceptible population. But let's leave that off the table for the moment. ]. Today, however, our goal is to think of the processes that lead to new infections and that cause infections to end. 
+
+# Putting together a model
+
+Models, whether mathematical or box and arrow, can be terrifically useful ways to organize our thinking about a process or system. They force us to consider the players, the steps involved, the forces at work, and what we're willing to ignore and what seems essential. So we are going to work together to create a model of a spreading infection. 
+
+_Wait!_ Don't freak out! We're only going to think in boxes and arrows (and logic). And I will be here to help you out. Let's give it a try.
+
+# Gaining infections
+
+I would like you to take this space to write out the steps or processes involved in an infected host spreading spreading that infection to susceptible hosts^[A fancy name for individual animals (or plants if you're into that thing) that are not yet infected, but are infectable.] in the population. Who are the players? What are the processes? Is there more than one pathway?
+
+Note: it may be helpful to think of a specific infection in a specific population. Be sure you and your group are on the same page about this specific system before proceeding. 
+
+
+\vspace{2cm}
+
+Have a good list? Let's now draw this process in a box-and-arrow format on the whiteboard. (Or if there is a format that makes more sense to you, use that!)
+
+# Losing infections
+
+Now write out the steps or proceses involved in the population losing infected hosts.  Who are the players? What are the processes? Is there more than one pathway? 
+
+\vspace{2cm}
+
+See if you cannot add these boxes or arrows to the diagram you have already drawn. 
+
+# Adding terms
+
+Odds are reasonably good that you now have a complex diagram on the white board with a lot of boxes or a lot of arrows. Models are much easier, and often more helpful, when they are simple. So let's see if we can simplify things a bit. 
+
+Please demark (circle, underline, box-in, or whatever is helpful) and label these different processes on your diagram. 
+
+* Transmission
+* Recovery
+* Virulence
+
+These are the basic processes involved in most models of infectious disease spread. But they may not cover all of the steps you included in your diagram. So step back and think about what else there should be in a good model of this spreading infection. 
+
+# Let's regroup and discuss
+
+We will spend a bit of time as a class comparing notes. I will also guide you all towards a particular sort of formulation. However, I want you to know that your models are also perfectly reasonable and potentially quite useful! There is no "right" model of infectious disease spread (or most anything else). Our goal was to organize our thinking, and hopefully yours did. I am going to push you towards my^[OK, not mine. I'm really borrowing from a long line of people that developed these ideas over the last century.] version for two reasons: 1) my version is very useful and has a lot of lessons to teach, and 2) we need to have a common language for talking about epidemics moving forward. In short, my version will be more useful for a lot of reasons that have nothing to do with the "correctness" or realism of any of these models. Thanks for playing along!

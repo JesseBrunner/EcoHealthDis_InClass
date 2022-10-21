@@ -1,0 +1,67 @@
+---
+title: "Parasites, commensals, & amensals, oh my!"
+author: "Jesse Brunner"
+date: "`r Sys.Date()`"
+output: tint::tintPdf
+latexfonts:
+  - package: newtxmath
+    options: 
+      - cmintegrals
+      - cmbraces
+  - package: ebgaramond-maths
+header-includes:
+   - \usepackage{booktabs}
+   - \usepackage{cancel}
+---
+
+```{r setup, include=FALSE}
+library(tufte)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, 
+                      message = FALSE, 
+                      warning = FALSE,
+                      echo = FALSE,
+                      cache.extra = packageVersion('tufte'))
+options(htmltools.dir.version = FALSE)
+```
+
+```{r, include=FALSE}
+library(tidyverse)
+library(scales) # for prettier axis labels
+library(simecol) # for running model 
+theme_set(theme_minimal())
+```
+
+# Graphing your interactions
+I am confident we have all dealt with a variety of people in a lot of different settings that have left us with good, neutral, and sour feelings. We've felt cheated and we've felt like we somehow "won" some interactions. Most, I would guess, haven't left much of an impression on us. But I'm also confident that you haven't spent a lot of time thinking about or even _graphing_ those interactions. Well, today is your lucky day!
+
+```{r}
+df <- expand_grid(A = -1:1, B = -1:1) %>% 
+  mutate(label = c("Competition", "amensalism", "pred/herb/parasit",
+                   "amensalism", "neutralism", "commensalism",
+                   "pred/herb/parasit", "commensalism", "mutualism"
+         ))
+
+ggplot(df, aes(A, B)) + 
+  geom_hline(yintercept = 0) + 
+  geom_vline(xintercept = 0) + 
+  geom_text(aes(label = label), angle = 30, alpha = 1/3) + 
+  coord_cartesian(ylim = c(-1.5, 1.5), xlim = c(-1.5, 1.5)) +
+  labs(y = "Effect on Player B", x = "Effect on Player A") +
+  theme_minimal()
+```
+
+I would like you to try to plot^[Note: Each interaction need not be represented by a point, but could be a line, region, or whatever shape makes the most sense to you.] these different sorts of interactions on the axes above. If you and your group disagree about where an interaction goes, be sure to discuss _why_. 
+
+  * you & your credit card company
+	* you & a grocery store
+	* teacher/student
+	* cook/consumer
+	* babysitter/kid
+	* siblings
+	* parent/offspring
+	* you and the Pullman City government
+	
+Now, think about how these interactions might change, and what factors or forces would change them. Do they all respond to the same factor(s)? Do they all change in the same direction?
+
+
