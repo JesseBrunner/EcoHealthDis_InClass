@@ -1,0 +1,94 @@
+---
+title: "Tube filling, with a beat!"
+# author: "Jesse Brunner"
+# date: "`r Sys.Date()`"
+output: tint::tintPdf
+latexfonts:
+  - package: newtxmath
+    options: 
+      - cmintegrals
+      - cmbraces
+  - package: ebgaramond-maths
+header-includes:
+   - \usepackage{booktabs}
+   - \usepackage{cancel}
+   - \usepackage[version=4]{mhchem}
+---
+
+```{r setup, include=FALSE}
+library(tufte)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, 
+                      message = FALSE, 
+                      warning = FALSE,
+                      echo = FALSE,
+                      cache.extra = packageVersion('tufte'))
+options(htmltools.dir.version = FALSE)
+```
+
+```{r, include=FALSE}
+library(tidyverse)
+library(scales) # for prettier axis labels
+# library(simecol) # for running model 
+theme_set(theme_minimal())
+```
+
+# The rationalle. 
+My laboratory often needs to grind up samples---tissues, swabs, etc---so that we can test them for pathogens. We use a machine called a bead-beater to shake 2 mL screw-cap tubes filled with the sample, some silicone-carbide sharp particles, and a liquid buffer really, really fast. We thus have a need for a lot of screw-cap tubes filled with just the right amount of sharp particles. It's the perfect sort of job for an assembly line^[Better yet, free labor!]. 
+
+# The set up and roles
+
+Please group yourselves into assembly lines of five people. If there are extra people, they can be our inspectors and data collectors. 
+
+Within a group we have five processes that need to be completed by five separate people. Please arrange yourselves according to the figure on the right.
+
+```{r, fig.margin = TRUE}
+knitr::include_graphics("TableArrangement.png", dpi = 600)
+```
+
+Now in a give step, the five people will do the following things. 
+
+1.  Person 1 opens the cap of a new tube and passes the _tube_ to person 2 and the _cap_ to person 5.  
+2.  Person 2 transfers the funnel from person 4 to the newly opened tube. They then pass the tube and funnel to person 4.
+3.  Person 3 fills the small end of the rubber cup with sharp particles and passes the cup to person 4.  
+4.  Person 4 pours the sharps into the tube, using the funnel, and passes the filled tube to person 5.  
+5.  Person 5 screws the cap on and passes the tube to the center of the table. 
+
+Again, **each person should do their thing in each step.** 
+
+Importantly, **we will pass on the beat**. Moreover, **you must pass the tube (or cap or whatever) on the beat even if you are not ready.**
+
+# Practice
+
+We will practice once or twice to make sure we get it. We want to make sure that "prime the pump" so that in the end everyone has the thing that they will be working with. That is, we want to be sure that when I say "go", everyone can do their action or process. 
+
+# For real!
+
+Our goal is to find the optimal tempo for our assembly line. We will use a metronome to set the temp. For each tempo we will record the number of tubes in the center of the table after 1 minute _and_ the number of mistakes. A mistake might be a tube that was not filled, was filled incorrectly, is missing its cap, or is just missing. 
+
+|   Tempo (bpm) | 4 | 8 | 12 | 16 | 20 | 24 |
+|--------------:|:-:|:-:|:--:|:--:|:--:|----|
+| # tubes total |   |   |    |    |    |    |
+| # mistakes    |   |   |    |    |    |    |
+
+
+Then, on these axes plot the number of tubes (in total) for each tempo (beats per minute, or BPM) and the number of mistakes that occurred.
+```{r}
+df <- tibble(BPM = 1:6*4, 
+             Tubes = BPM+1)
+
+ggplot(df, aes(BPM, Tubes)) + 
+  #geom_point() + 
+  scale_y_continuous(minor_breaks = 0:max(df$BPM), 
+                     limits = c(0, NA)) + 
+  scale_x_continuous(breaks = df$BPM) + 
+  theme_bw()
+```
+
+# The take home
+
+You probably suspected that this wasn't (entirely) about getting tubes filled. This was a physical model (or analogy or game) representing how rates of biochemical reactions tend to increase with temperature, and the costs of those temperature increases. Like all models, it is wrong, but is (hopefully) useful. 
+
+Take a moment and discuss with your group what is wrong (or right) with this model and what is useful. How does it compare to reality? What ideas or questions or thoughts has it spurred?
+
+## The good \hspace{5cm} The bad
