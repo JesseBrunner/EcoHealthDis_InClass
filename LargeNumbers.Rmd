@@ -35,13 +35,13 @@ theme_set(theme_minimal())
 
 
 
-Let's be honest: it can be hard to think about big numbers in any very intuitive sense. In an evolutionary sense, we were never exposed to and so never got good at thinking with such large numbers^[Not until the invention of mathematics beyond simply counting and science, anyway!]  After a certain number of zeros, everything gets compressed in our thinking to "big"! A million? A billion? A trillion? They're just much larger than I can count. Or are they?
+Let's be honest: it can be hard to have an intuitive sense of large numbers. In an evolutionary sense, we were never exposed to numbers more than dozens or hundreds, and so we never got good at thinking with such large numbers^[Not until the invention of mathematics beyond simply counting anyway!]  After a certain number of zeros, everything gets compressed in our thinking to "big"! A million? A billion? A trillion? They're just much larger than I can count. Or are they?
 
 Have you ever tried counting to a million? I'm guessing you have better things to do with your time, but using the power of Math~TM~ we could figure out how long it would take if you _did_ count to a million, and a billion, and so on. So let's figure this out. 
 
 # Once per second
 
-If we made the simplifying assumption that you count one number second then counting to a million is pretty straight-forward: it takes a million seconds! 
+If we make the simplifying assumption that you can count one number per second then counting to a million is pretty straight-forward: it takes a million seconds! 
 
 Is that not intuitive? Then let's try converting that to, say, hours^[Notice that all of the units cancel out.]. 
 
@@ -54,6 +54,8 @@ $$
 1,000,000 \text{ numbers} \times \frac{1 \text{ second}}{ \text{ number}} \times \frac{\text{minute}}{60 \text{ seconds}}\times \frac{\text{hour}}{60 \text{ minutes}} \times \frac{\text{day}}{24 \text{ hours}} =
 $$
 I'll let you do the calculation. I'm so nice, right?
+
+Then please repeat the calculation for a billion and a trillion, converting to units (e.g., days, weeks, ...) that are more intuitive (e.g., less than a thousand). 
 
 # But I count faster!
 
@@ -68,36 +70,42 @@ Let's repeat these calculations for a _billion_. And then a _trillion_.
 
 \vspace{4cm}
 
-_Now_ do you have some sense for how large these numbers are? And remember, moving from a million to a billion is an increase of a thousand. Moving from a million to a trillion is an increase of a thousand-thousand, or a million. In other words, a trillion is a million-million. It is a much, much, much bigger number.
+_Now_ do you have some sense for how large these numbers are? Remember, moving from a million to a billion is an increase of a thousand. Moving from a million to a trillion is an increase of a thousand-thousand, or a million. In other words, a trillion is a million-million. It is a much, much, much bigger number.
 
 # But why?
 
 Why do we care? Because in science we often end up dealing with large numbers. And we need to be able to work with them. So, for instance, if I were to ask you if there are more humans on earth than (human) cells in the human body, what would you say?
 
-The answer is that, as of this writing, there are an [estimated](https://www.census.gov/popclock/) 7,924,962,530 people on earth and an [estimated](https://pubmed.ncbi.nlm.nih.gov/23829164/) $37.2 \times 10^{12}$ cells in an average human body^[[This is a lovely little description](https://www.nationalgeographic.com/science/article/how-many-cells-are-in-your-body) of how they estimated this number... obviously no one wanted to _count_ them all! ].
+The answer is that, as of this writing, there are an [estimated](https://www.census.gov/popclock/) 8,004,778,263 people on earth and an [estimated](https://pubmed.ncbi.nlm.nih.gov/23829164/) $37.2 \times 10^{12}$ cells in an average human body^[[This is a lovely little description](https://www.nationalgeographic.com/science/article/how-many-cells-are-in-your-body) of how they estimated this number... obviously no one wanted to _count_ them all! ].
 
-How many virus particles might be in an infected person? For SARS-CoV-2 [one study](https://www.pnas.org/doi/full/10.1073/pnas.2024815118) estimated a person might carry between 1 billion and 100 billion virus particles (or virions). Which is a lot, but not nearly as many virus particles as cells (as is implied in the [very wrong headline of this news piece](https://www.news-medical.net/news/20201118/Around-10-SARS-CoV-2-infected-virions-per-cell-in-human-body-study-finds.aspx) on the study). Amazingly the authors then estimated the _mass_ of all of the SARS-CoV-2 virions in all of humans. Any guesses?^[No, I'm not telling you! Follow the links for the answer.] 
+How many virus particles might be in an infected person? For SARS-CoV-2 [one study](https://www.pnas.org/doi/full/10.1073/pnas.2024815118) estimated a person might carry between 1 billion and 100 billion virus particles (or virions). This is a lot, but not nearly as many virus particles as cells (as is implied in the [very wrong headline of this news piece](https://www.news-medical.net/news/20201118/Around-10-SARS-CoV-2-infected-virions-per-cell-in-human-body-study-finds.aspx) on the study). Amazingly the authors then estimated the _mass_ of all of the SARS-CoV-2 virions in all of humans. Any guesses?^[No, I'm not telling you! Follow the links for the answer.] 
+
+
+
+# Equations are tools...and you can be a clever tool user
+
+The same way we can get a grip on large numbers, we can also play with equations of population growth to develop some intuition for how they work. Indeed, I've found that the best way to demystify equations is to plug in some numbers and do some calculations. The more the better! So...
 
 # A challenge
 
-Let's think about this growing SARS-CoV-2 population. If we assume an infection starts with $N_0 = 1$ infectious virion and grows to a billion virions in the span of five days, what must its replication rate be? 
+Let's think about a growing SARS-CoV-2 population. If we assume an infection starts with $N_0 = 1$ infectious virion and grows to a billion virions in the span of five days, what must its replication rate be? 
 
-Let's assume continuous, constant replication (and ignore the immune system fighing back and all of the other complexities), so we can use the exponential model of growth:
+Let's assume continuous, constant replication (and ignore the immune system fighting back and all of the other complexities), so we can use the exponential model of growth:
 
 $$
 N(t) = N_0 e^{rt}
 $$
-Start by assigning the known values I've given you to the variables in this equation. (Hint: we know $t = 5$ days, right?) Then remember that these are _equations_ can can be manipulated any which way you like^[But preferably according to the rules of mathematics.]. You should be able to estimate $r$. Give it a shot!
+Start by assigning the known values I've given you to the variables in this equation. (Hint: we know $t = 5$ days, right?) Then remember that these are _equations_ that can be manipulated any which way you like^[But preferably according to the rules of mathematics.]. You should be able to estimate $r$. Give it a shot! (And check your work by plugging  your estimate of $r$ back into the equation to see if it gets you the right result.)
 
 \vspace{3cm}
 
-Now try if we assume it grows to ten-billion virions. Or starts from 10 virions.
+Repeat the calculations assuming the population grows to ten-billion virions. Or starts from a founding population of 10 virions.
 
 \vspace{3cm}
 
 # A final challenge
 
-Now let's consider the number of cells in a human newborn baby. I found an [estimate](https://bionumbers.hms.harvard.edu/bionumber.aspx?id=106413&ver=4)^[Apparently based on a pretty old paper, so_ caveat emptor_] of $1.25 \times 10^{12}$ cells. We also know that the newborn began from a single cell roughly nine months earlier. So... if we assume that the cells all divide in two, in discrete steps^[This is only true for a little while, but let's run with this assumption.], how many times does that one cell need to divide to produce the 1.25 trillion it is born with?
+Now let's consider the number of cells in a human newborn baby. I found an [estimate](https://bionumbers.hms.harvard.edu/bionumber.aspx?id=106413&ver=4)^[Apparently based on a pretty old paper, so_ caveat emptor_] of $1.25 \times 10^{12}$ cells. We also know that the newborn began from a single cell roughly nine months earlier. So... if we assume that the cells all divide in two, in discrete steps^[This is only true for a little while, but let's run with this assumption.], how many _times_ does that one cell need to divide to produce the 1.25 trillion it is born with?
 
 It may be helpful to recall this equation:
 
