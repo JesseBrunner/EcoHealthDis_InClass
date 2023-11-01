@@ -1,0 +1,134 @@
+---
+title: "Heads, you're dead"
+# author: "Jesse Brunner"
+# date: "`r Sys.Date()`"
+output: tint::tintPdf
+latexfonts:
+  - package: newtxmath
+    options: 
+      - cmintegrals
+      - cmbraces
+  - package: ebgaramond-maths
+header-includes:
+   - \usepackage{booktabs}
+   - \usepackage{cancel}
+   - \usepackage[version=4]{mhchem}
+---
+
+```{r setup, include=FALSE}
+library(tufte)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, 
+                      message = FALSE, 
+                      warning = FALSE,
+                      echo = FALSE,
+                      cache.extra = packageVersion('tufte'))
+options(htmltools.dir.version = FALSE)
+```
+
+```{r, include=FALSE}
+library(tidyverse)
+library(scales) # for prettier axis labels
+library(ggpubr)
+# library(simecol) # for running model 
+theme_set(theme_minimal())
+```
+
+
+Life history analyses and life tables can be confusing. A good strategy to understanding is to make up an example and try to apply the new concept or tool. So, today in class we will play simple little game, "Heads, you're dead." 
+
+The rule are simple. 
+
+* Each coin represents an individual in our cohort^[Individuals born at the same time that we will track over time.]
+* Each time step we will flip all "living" coins one time
+* Any coin that has its head up is "dead"
+* A coin can only die once (i.e., once it's dead, it isn't flipped any more)
+
+We'll start with everyone having a set number of coins to flip and then track how many are alive after each flip (aka time step). Please record the class data in the $n_x$ column in the table. (We'll fill in the rest as we go.)
+
+| $x$ | $n_x$ | $l_x$ | $m_x$ | $l_x \times m_x$ |
+|-----|-------|-------|-------|------------------|
+| 0   | \hspace{2cm} |\hspace{2cm}  | \hspace{2cm}  | \hspace{2cm}    |
+|     |       |       |       |                  |
+| 1   |       |       |       |                  |
+|     |       |       |       |                  |
+| 2   |       |       |       |                  |
+|     |       |       |       |                  |
+| 3   |       |       |       |                  |
+|     |       |       |       |                  |
+| 4   |       |       |       |                  |
+|     |       |       |       |                  |
+| 5   |       |       |       |                  |
+|     |       |       |       |                  |
+| 6   |       |       |       |                  |
+|     |       |       |       |                  |
+| 7   |       |       |       |                  |
+|     |       |       |       |                  |
+| 8   |       |       |       |                  |
+|     |       |       |       |                  |
+| 9   |       |       |       |                  |
+|     |       |       |       |                  |
+| 10  |       |       |       |                  |
+|     |       |       |       |                  |
+
+
+$x$ is the time step (e.g., week, month, or year 0, 1, 2, 3...) 
+
+$n_x$ is the number surviving at the beginning of that time step
+
+$l_x$ is the _proportion_ surviving at the beginning of that time step
+
+$m_x$ is the _fecundity_, the number of offspring produced by an individual in the period from $x$ to $x+1$.
+
+
+\newpage
+
+# Graphing our data
+
+With the survivorship data in hand, plot $n_x$ against $x$ on these two sets of axes:
+
+```{r, fig.width = 10, fig.height = 6, fig.fullwidth = TRUE}
+dat <- tibble(x=c(0,10), 
+              nx=c(1,100)
+)
+
+a <- ggplot(dat, aes(x, nx)) + 
+  geom_blank() + 
+  scale_y_continuous(expression(Number~alive~at~time~x~(n[x])), 
+                     breaks = 10*0:10, minor_breaks = 0:100) + 
+  scale_x_continuous("Time step (x)", 
+                     breaks = 0:10)
+
+b <- last_plot() + scale_y_log10(NULL, 
+                     breaks = 10*0:10, minor_breaks = 0:100)
+
+ggarrange(a, b)
+```
+
+Do the graphs match your expectations? What fraction of individual coins did you expect to be alive at each time point? What do you notice about the slope on the graph with the logarithmic y-axis?
+
+Now would also be a good time to think about what these curves would look like for, say, a set of humans where each time step is 10 years, or a mouse where each time step is a month. 
+
+# Filling in the table
+
+We still need to fill in our life table. You can start with $l_x$, which is just the proportion of the original cohort that survived to each point. 
+
+Next we need to make up some fecundity numbers. Let's imagine that our coins do not be come reproductively mature until age $x=3$, at which point they can produce an average^[Note that we are _not_ saying that every individual produces that many offspring, just that _on average_ individuals that survived to step 3 will produce four offspring by the next step.] of four offspring in this time step. Thus $m_3=4$. Each of the remaining time step of their lives they produce one fewer offspring (i.e., $m_4=3, m_5=2, m_6=1, \text{ and }m_7=0$). Fill in these numbers in the table.
+
+The next step is simple. We simply multiply $l_x$ by $m_x$ in the right-most column. This is essentially the amount of reproductive output we can expect from a newborn in time step $x$. It combines the probability of surviving to time $x$ and the average fecundity at that time. 
+
+Finally, if we sum up all of the $l_x m_x$'s we get the expected reproductive output of a coin over its _entire_ lifetime. We call this $R_0$. That is, $R_0 = \sum l_x m_x$. We can expect every individual^[Note that we are assuming every individual is reproductive] will, on average, produce $R_0$ offspring before it dies. 
+
+So, here's a question for you: will this population of coins tend to grow, shrink, or stay the same?
+
+# Using life tables to guide interventions
+
+Often we want to intervene in a population to make it more or less likely to grow or grow fast. We might want to help an endangered species persist by making sure $R_0$ is large enough, or instead we might want to reduce the $R_0$ of an invasive species, pest, or parasite to minimize the harm it does. 
+
+Thus, your challenge: imagine you can change the biology of this coin population in one way to make it growth (if it was shrinking) or shrink (if it was growing). What is the best way to intervene to achieve your goal? Your choices are:
+
+* alter one survival transition by 20% (e.g., if the probability of surviving from one time step to the next was 0.5, you could change one of these steps to 0.5 $\pm$ 0.1 ).
+* alter the fecundity of one stage/age by 50%
+* delay or accelerate reproductive maturity (i.e., when $m_x > 0$) by one step.
+
+
