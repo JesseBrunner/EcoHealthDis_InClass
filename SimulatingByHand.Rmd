@@ -82,7 +82,7 @@ $$
 $$
 \phi = 
 $$
-We will use these parameters as well as the following starting values for this exercise. We will assume a population of $S=100$ susceptible individuals at time $t=0$ and no recovered and thus resistant individuals ($R=0$). Further, let's assume that a single infected individual rides into town ($I=0$). 
+We will use these parameters as well as the following starting values for this exercise. We will assume a population of $S=100$ susceptible individuals at time $t=0$ and no recovered and thus resistant individuals ($R=0$). Further, let's assume that a single infected individual rides into town ($I=1$). 
 
 # Simulating, slowly
 
@@ -90,7 +90,7 @@ The thing about our model, above, is that it does _not_ tells us how many $S$, $
 
 There is one little caveat: These are differential equations, which assume that everything happens all the time, instantaneously. We, however, have to deal in discrete time steps. We will revisit this, but for now let's just proceed in one-day increments. OK?
 
-So if we start with:
+So, beginning with our starting values ($S=100$, $I=1$, and $R=0$) let us figure out how many $S$, $I$, and $R$ we have at time 1, then time 2, and time 3. 
 
 \begin{table}[]
 \begin{tabular}{lllllllll}
@@ -103,9 +103,8 @@ Time & S   & I & R &  & I/N   & gain in I & loss of I & newly recovered \\
 \end{tabular}
 \end{table}
 
-we want to figure out what we have at time 1, then time 2, and time 3. 
 
-Let's start with the gain in infections, shall we? This happens at rate $\beta\frac{I}{N}S$. Well, we have all these numbers! You chose $\beta$ and I gave you $I/N = 1/101$ and $S=100$. So the new infections produced in the time step from time 0 to time 1 is $\beta \frac{1}{101}\times 100$. Calculate this number for whatever value of $\beta$ you chose and write this in the "gain in I$ column. 
+Let's start with the gain in infections, shall we? This happens at rate $\beta\frac{I}{N}S$. Well, we have all these numbers! You chose $\beta$ and I gave you $I/N = 1/101$ and $S=100$. So the new infections produced in the time step from time 0 to time 1 is $\beta \frac{1}{101}\times 100$. Calculate this number for whatever value of $\beta$ you chose and write this in the "gain in I" column. 
 
 We can take a similar approach to the loss of infections, which happens at rate $\gamma I$. At time 0 I told you that $I=1$ and you chose $\gamma$ so their product is pretty easy to calculate, right? Write this number in the "loss of I" column. 
 

@@ -31,7 +31,7 @@ theme_set(theme_minimal())
 ```
 
 # Graphing your interactions
-I am confident we have all dealt with a variety of people in a lot of different settings that have left us with good, neutral, and sour feelings. We've felt cheated and we've felt like we somehow "won" some interactions. Most, I would guess, haven't left much of an impression on us. But I'm also confident that you haven't spent a lot of time thinking about or even _graphing_ those interactions. Well, today is your lucky day!
+We have all dealt with a variety of people in many different settings that have left us with good, neutral, and sour feelings. We've felt cheated. We've felt like we benefited from an interaction. Most interactions, I would guess, haven't left much of an impression on us at all. But I'm also confident that you haven't spent a lot of time _graphing_ those interactions. Well, today is your lucky day!
 
 ```{r}
 df <- expand_grid(A = -1:1, B = -1:1) %>% 
@@ -44,7 +44,7 @@ ggplot(df, aes(A, B)) +
   geom_hline(yintercept = 0) + 
   geom_vline(xintercept = 0) + 
   geom_text(aes(label = label), angle = 30, alpha = 1/3, size = 2) + 
-  labs(y = "Effect on Player B", x = "Effect on Player A") +
+  labs(y = "Effect on Player B", x = "Effect on Player A (you)") +
   coord_equal(ylim = c(-1.5, 1.5), xlim = c(-1.5, 1.5)) +
   theme_minimal() + 
   theme(axis.title = element_text(size = 5), 
@@ -52,18 +52,18 @@ ggplot(df, aes(A, B)) +
   
 ```
 
-I would like you (and your group) to **plot**^[Note: Each interaction need not be represented by a point, but could be a line, region, or whatever shape makes the most sense to you.] **these  interactions** on the axes above. If you and your group disagree about where an interaction goes, be sure to discuss _why_. 
+I would like you (and your group) to **plot**^[Note: Each interaction need not be represented by a point, but could be a line, region, or whatever shape makes the most sense to you.] **these  interactions** on the axes above. If you and your group disagree about where an interaction goes, be sure to discuss _why_. Please focus on the good and bad for you as an individual and the other player, as opposed to societal good and bad.
 
 * you & your credit card company
 * you & a grocery store
-* teacher/student
-* cook/consumer
-* babysitter/kid
-* siblings
-* parent/offspring
+* you & your teachers
+* you & a cook or chef
+* you as the babysitter for a child
+* you & a sibling
+* you & a parent
 * you & the Pullman City government
 
-Please then **plot your group's points on the whiteboard** with everyone else's. If there is variability among groups, why might that be? Are the other groups simply wrong?
+Please then **plot your group's points or regions on the whiteboard** with everyone else's. If there is variability among groups, why might that be? Are the other groups simply wrong?
 
 Now, think about how these interactions might change, and what factors or forces would change them. Do they all respond to the same factor(s)? Do they all change in the same direction?
 
