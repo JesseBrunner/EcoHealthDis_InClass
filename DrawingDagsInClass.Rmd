@@ -1,0 +1,68 @@
+---
+title: "Drawing DAGs: puerperal fever & breakfast"
+output: tint::tintHtml
+latexfonts:
+  - package: newtxmath
+    options: 
+      - cmintegrals
+      - cmbraces
+  - package: ebgaramond-maths
+header-includes:
+   - \usepackage{booktabs}
+   - \usepackage{cancel}
+---
+
+```{r setup, include=FALSE}
+library(tufte)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, 
+                      message = FALSE, 
+                      warning = FALSE,
+                      echo = FALSE,
+                      cache.extra = packageVersion('tufte'))
+options(htmltools.dir.version = FALSE)
+```
+
+```{r, include=FALSE}
+library(tidyverse)
+library(scales) # for prettier axis labels
+library(simecol) # for running model 
+theme_set(theme_minimal())
+```
+
+```{r, include=FALSE}
+# library(tidyverse)
+# library(scales) # for prettier axis labels
+# library(simecol) # for running model 
+# theme_set(theme_minimal())
+library(dagitty)
+```
+
+# Drawing DAGs
+DAGs can be a wonderfully useful tool for thinking about causation. We're going to practice with the two examples we have been learning about and working with. In each case I would like you to, _at the whiteboard_, draw the DAG given how the people at the time were thinking about causation. 
+
+Here are some hints and reminders:
+
+* The variables or "nodes" represent things that you could potentially measure or states of the system (e.g., "temperature" or "disease")
+    - they are not processes (i.e., not "infection", but "infection status")
+    - amounts of something  (i.e., not "increased temperature," but "temperature")
+* The arrows represent causation, such that $x \rightarrow y$ reads as, "a change in $x$ _causes_ a change in $y$"
+    - the arrows do not mean "increase" or "decrease" (i.e.,  $x$ could be increased or decreased and $y$ would respond accordingly)
+* It can be helpful to work backwards with the effect (e.g., if "infection status" is the effect of interest, then ask, what things control whether an individual is infected or not?)
+
+# Draw a DAG for Ignaz Semmelweis' understanding of puerperal fever in the maternity ward
+
+Here are a list of the variables (nodes) of interest. Please use them to draw a DAG
+
+* Bleach water
+* Cadaver particles on hands
+* Doctor's vs. midwives ward
+* Puerperal fever
+* Childbirth
+* Doctor laziness
+* Autopsies conducted
+
+# Draw a DAG for López-Gil and colleagues' understanding of how eating breakfast causes happiness
+
+For this second one, I'm going to let you choose the variables of interest. you are welcome to use your notes. 
+
