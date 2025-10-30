@@ -35,54 +35,74 @@ theme_set(theme_minimal())
 ```
 
 
-Life history analyses and life tables can be confusing. A good strategy to understanding is to make up an example and try to apply the new concept or tool. So, today in class we will play simple little game, "Heads, you're dead." 
+```{r playground, include=FALSE}
 
-The rule are simple. 
+df <- tibble(x=0:10, 
+             lx=0.5^x, #coin flip survival part
+             mx= pmin(x/6,1) * mean(1:6), #dice survival part
+             lxmx = lx*mx
+               )
+sum(df$lxmx)
+```
+
+Life history tables can be confusing. A good strategy to understanding is to make up an example and try to apply the new concept or tool. So, today in class we will play simple little game, "Heads, you're dead, roll to reproduce." 
+
+The rule for _survival_ are simple:
 
 * Each coin represents an individual in our cohort^[Individuals born at the same time that we will track over time.]
 * Each time step we will flip all "living" coins one time
-* Any coin that has its head up is "dead"
-* A coin can only die once (i.e., once it's dead, it isn't flipped any more)
+* Any coin that has its head up is "dead"^[A coin can only die once (i.e., once it's dead, it isn't flipped any more)]
 
-We'll start with everyone having a set number of coins to flip and then track how many are alive after each flip (aka time step). Please record the class data in the $n_x$ column in the table. (We'll fill in the rest as we go.)
+The rule for _fecundity_ are not to bad either:
 
-| $x$ | $n_x$ | $l_x$ | $m_x$ | $l_x \times m_x$ |
-|-----|-------|-------|-------|------------------|
-| 0   | \hspace{2cm} |\hspace{2cm}  | \hspace{2cm}  | \hspace{2cm}    |
-|     |       |       |       |                  |
-| 1   |       |       |       |                  |
-|     |       |       |       |                  |
-| 2   |       |       |       |                  |
-|     |       |       |       |                  |
-| 3   |       |       |       |                  |
-|     |       |       |       |                  |
-| 4   |       |       |       |                  |
-|     |       |       |       |                  |
-| 5   |       |       |       |                  |
-|     |       |       |       |                  |
-| 6   |       |       |       |                  |
-|     |       |       |       |                  |
-| 7   |       |       |       |                  |
-|     |       |       |       |                  |
-| 8   |       |       |       |                  |
-|     |       |       |       |                  |
-| 9   |       |       |       |                  |
-|     |       |       |       |                  |
-| 10  |       |       |       |                  |
-|     |       |       |       |                  |
+* For each surviving coin, you will roll one die to determine if you reproduce
+* If you roll a number that is $\leq x$, where $x$ is the time step, you reproduce. If not, you do not reproduce in that time step.
+* If you reproduce, roll again to determine how large your clutch is
+
+
+We'll start with everyone having a set number of coins to flip and then track how many are alive after each flip (aka time step) as well as how many offspring all of the live coins have. Please record the class data in the $n_x$ (number alive) and $F_x$ (number born) columns in the table. (We'll fill in the rest as we go.)
+
+\newpage
+
+| $x$ | $n_x$ | $F_x$ | $l_x$ | $m_x$ | $l_x \times m_x$ |
+|-----|-------|-------|-------|-------|------------------|
+| 0   | \hspace{1.5cm}     | \hspace{1.5cm}      | \hspace{1.5cm}      | \hspace{1.5cm}      |  \hspace{1.5cm}        |
+|     |       |       |       |       |          |
+| 1   |       |       |       |       |          |
+|     |       |       |       |       |          |
+| 2   |       |       |       |       |          |
+|     |       |       |       |       |          |
+| 3   |       |       |       |       |          |
+|     |       |       |       |       |          |
+| 4   |       |       |       |       |          |
+|     |       |       |       |       |          |
+| 5   |       |       |       |       |          |
+|     |       |       |       |       |          |
+| 6   |       |       |       |       |          |
+|     |       |       |       |       |          |
+| 7   |       |       |       |       |          |
+|     |       |       |       |       |          |
+| 8   |       |       |       |       |          |
+|     |       |       |       |       |          |
+| 9   |       |       |       |       |          |
+|     |       |       |       |       |          |
+| 10  |       |       |       |       |          |
+|     |       |       |       |       |          |
+
 
 
 $x$ is the time step (e.g., week, month, or year 0, 1, 2, 3...) 
 
 $n_x$ is the number surviving at the beginning of that time step
 
+$F_x$ is the number offspring born to the whole cohort in a time step
+
 $l_x$ is the _proportion_ surviving at the beginning of that time step
 
-$m_x$ is the _fecundity_, the number of offspring produced by an individual in the period from $x$ to $x+1$.
+$m_x$ is the _fecundity_, the average number of offspring produced by a live individual in the period from $x$ to $x+1$.
 
 
 \newpage
-
 # Graphing our data
 
 With the survivorship data in hand, plot $n_x$ against $x$ on these two sets of axes:
@@ -111,11 +131,13 @@ Now would also be a good time to think about what these curves would look like f
 
 # Filling in the table
 
-We still need to fill in our life table. You can start with $l_x$, which is just the proportion of the original cohort that survived to each point. 
+We still need to fill in our life table. You can start with $l_x$, which is just the proportion of the original cohort that survived to each point (i.e., $l_x = n_x/n_0$). 
 
-Next we need to make up some fecundity numbers. Let's imagine that our coins do not be come reproductively mature until age $x=3$, at which point they can produce an average^[Note that we are _not_ saying that every individual produces that many offspring, just that _on average_ individuals that survived to step 3 will produce four offspring by the next step.] of four offspring in this time step. Thus $m_3=4$. Each of the remaining time step of their lives they produce one fewer offspring (i.e., $m_4=3, m_5=2, m_6=1, \text{ and }m_7=0$). Fill in these numbers in the table.
+Next we need to calculate fecundity based on the reproductive output observed. This is just the average reproduction by someone alive in that time step. That is, $m_x = F_x/n_x$.  Fill in these numbers in the table.
 
-The next step is simple. We simply multiply $l_x$ by $m_x$ in the right-most column. This is essentially the amount of reproductive output we can expect from a newborn in time step $x$. It combines the probability of surviving to time $x$ and the average fecundity at that time. 
+With standardized survivorship ($l_x$) and fecundity ($m_x$) we actually have everything we need to estimate the growth (or rate of decline) of this population. 
+
+This may not be obvious, but in the next step we need to weight the fecundity by the probability of surviving to that point. This is essentially the amount of reproductive output we can expect from a newborn in time step $x$.  It is simpler than it sounds: just  multiply $l_x$ by $m_x$ in the right-most column. 
 
 Finally, if we sum up all of the $l_x m_x$'s we get the expected reproductive output of a coin over its _entire_ lifetime. We call this $R_0$. That is, $R_0 = \sum l_x m_x$. We can expect every individual^[Note that we are assuming every individual is reproductive] will, on average, produce $R_0$ offspring before it dies. 
 
