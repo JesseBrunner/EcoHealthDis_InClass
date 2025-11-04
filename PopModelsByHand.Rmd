@@ -1,0 +1,140 @@
+---
+title: "Demystifying the population growth model"
+output: tint::tintHtml
+latexfonts:
+  - package: newtxmath
+    options: 
+      - cmintegrals
+      - cmbraces
+  - package: ebgaramond-maths
+header-includes:
+   - \usepackage{booktabs}
+   - \usepackage{cancel}
+---
+
+```{r setup, include=FALSE}
+library(tufte)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, 
+                      message = FALSE, 
+                      warning = FALSE,
+                      echo = FALSE,
+                      cache.extra = packageVersion('tufte'))
+options(htmltools.dir.version = FALSE)
+```
+
+```{r, include=FALSE}
+library(tidyverse)
+library(scales) # for prettier axis labels
+theme_set(theme_minimal())
+```
+
+
+Mathematical models can seem like magic. Let's see if we cannot gain some intuition for these models by plugging in numbers
+
+# The models
+
+Again, we have two equations: The exponential model (left) and the logistic model (right)
+
+$$
+\frac{dN}{dt} = rN \hspace{3cm} \frac{dN}{dt} = rN\left( 1-\frac{N}{k} \right)
+$$
+
+We can divide both sides by $N$ to get the per capita growth rate in each
+
+$$
+\begin{aligned}
+\frac{\frac{dN}{dt}}{N} &= \frac{rN}{N}  \hspace{3cm} \frac{\frac{dN}{dt}}{N} &= \frac{rN\left( 1-\frac{N}{k} \right)}{N} \\
+&=r  \hspace{3cm} &=  r-\frac{r}{k}N
+\end{aligned}
+$$
+Let's choose some values for $r$ and $k$^[$r =$ _________  $k =$ _________] and fill in the table.
+
+
+| N    | (dN/dt)/N exponential | dN/dt exponential | (dN/dt)/N logistic | dN/dt logistic |
+|------|---------------------|-------------------|------------------|----------------|
+| 0    |                     |                   |                  |                |
+|      |                     |                   |                  |                |
+| 100  |                     |                   |                  |                |
+|      |                     |                   |                  |                |
+| 200  |                     |                   |                  |                |
+|      |                     |                   |                  |                |
+| 300  |                     |                   |                  |                |
+|      |                     |                   |                  |                |
+| 400  |                     |                   |                  |                |
+|      |                     |                   |                  |                |
+| 500  |                     |                   |                  |                |
+|      |                     |                   |                  |                |
+| 600  |                     |                   |                  |                |
+|      |                     |                   |                  |                |
+| 700  |                     |                   |                  |                |
+|      |                     |                   |                  |                |
+| 800  |                     |                   |                  |                |
+|      |                     |                   |                  |                |
+| 900  |                     |                   |                  |                |
+|      |                     |                   |                  |                |
+| 1000 |                     |                   |                  |                |
+|      |                     |                   |                  |                |
+| 1100 |                     |                   |                  |                |
+
+Then we can graph these numbers...
+
+```{r, fig.height=7.5}
+df <- tibble(N = 0:11 * 100, 
+             dN = 2*N,
+             dN_N = 2 - 2/1000 * N) 
+top <- ggplot(df, aes(N, dN_N)) + 
+  geom_blank() + 
+  scale_x_continuous(breaks = df$N) + 
+  scale_y_continuous(expression((dN/dt)/N)) + 
+  theme_bw() + theme(axis.text.y = element_blank())
+
+
+bottom <- ggplot(df, aes(N, dN)) + 
+  geom_blank() + 
+  scale_x_continuous(breaks = df$N) + 
+  scale_y_continuous(expression(dN/dt)) + 
+  theme_bw() + theme(axis.text.y = element_blank())
+
+
+ggpubr::ggarrange(top, bottom, nrow = 2)
+```
+
+Then we can use these numbers to figure out the population size over time, $N(t)$. Let's fill out the table. Remember, what we have in the next time step is what we had in _this_ time step plus however much the population grows^[This is approximately true when the time steps are small. It's fine for our purposes].
+
+| t  | N(t) \hspace{0.5cm} | dN/dt \hspace{0.5cm}|   | N(t) \hspace{0.5cm}| dN/dt \hspace{0.5cm} |
+|----|------|-------|---|------|-------|
+| 0  |  100 |       |   |  100 |       |
+|    |      |       |   |      |       |
+| 1  |      |       |   |      |       |
+|    |      |       |   |      |       |
+| 2  |      |       |   |      |       |
+|    |      |       |   |      |       |
+| 3  |      |       |   |      |       |
+|    |      |       |   |      |       |
+| 4  |      |       |   |      |       |
+|    |      |       |   |      |       |
+| 5  |      |       |   |      |       |
+|    |      |       |   |      |       |
+| 6  |      |       |   |      |       |
+|    |      |       |   |      |       |
+| 7  |      |       |   |      |       |
+|    |      |       |   |      |       |
+| 8  |      |       |   |      |       |
+|    |      |       |   |      |       |
+| 9  |      |       |   |      |       |
+|    |      |       |   |      |       |
+| 10 |      |       |   |      |       |
+|    |      |       |   |      |       |
+
+And plot the results
+```{r}
+tibble(time = c(0,10), 
+       N = c(1,1100) ) %>% 
+  ggplot(., aes(x=time, y=N)) + 
+  scale_x_continuous("Time", breaks = 0:10) +
+  scale_y_continuous("N(t)", breaks = 0:11*100) + 
+  theme_bw() 
+
+```
+
