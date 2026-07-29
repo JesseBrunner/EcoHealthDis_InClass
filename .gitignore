@@ -6,3 +6,9 @@
 *.log
 Whiteboard*
 *.key
+*.html
+
+*.xlsx
+*.docx
+HexBugs_Vancouver/
+Airplane/

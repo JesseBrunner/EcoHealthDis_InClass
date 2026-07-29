@@ -1,6 +1,6 @@
 ---
 title: "Demystifying the epidemic model"
-output: tint::tintPdf
+output: tint::tintHtml
 latexfonts:
   - package: newtxmath
     options: 
@@ -74,13 +74,13 @@ but they are just numbers. It helps to keep track of what the parameters (all th
 
 For fun, I'd like your group to come up with some values for these three parameters (write them down here).
 $$
-\beta = 
-$$
-$$
-\gamma = 
-$$
-$$
-\phi = 
+\begin{aligned}
+\beta &=  \hspace{2cm} (\leq 1) \\
+\\
+\gamma &= \hspace{2cm} (\leq 1) \\
+\\
+\phi &= \hspace{2cm} (0 \leq \phi \leq 1)
+\end{aligned}
 $$
 We will use these parameters as well as the following starting values for this exercise. We will assume a population of $S=100$ susceptible individuals at time $t=0$ and no recovered and thus resistant individuals ($R=0$). Further, let's assume that a single infected individual rides into town ($I=1$). 
 

@@ -1,0 +1,110 @@
+---
+title: "Dice and dose-response relationships"
+date: "`r Sys.Date()`"
+output: tint::tintPdf
+latexfonts:
+  - package: newtxmath
+    options: 
+      - cmintegrals
+      - cmbraces
+  - package: ebgaramond-maths
+header-includes:
+   - \usepackage{booktabs}
+   - \usepackage{cancel}
+---
+
+```{r setup, include=FALSE}
+library(tufte)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, 
+                      message = FALSE, 
+                      warning = FALSE,
+                      echo = FALSE,
+                      cache.extra = packageVersion('tufte'))
+options(htmltools.dir.version = FALSE)
+```
+
+```{r, include=FALSE}
+ library(tidyverse)
+# library(scales) # for prettier axis labels
+# library(simecol) # for running model 
+theme_set(theme_bw())
+library(ggpubr)
+```
+
+# Dice as pathogens
+
+Today we rolled dice to represent the chance of being infected by a pathogen (e.g., a virus). We had three rules: 
+
+1.  At least one 6 causes an infection (anything else does not)
+2.  At least two 6's cause an infection
+3.  At least four 6's cause an infection
+
+These were our data:
+```{r}
+# Theoretical values given the dice rules
+theory <- tibble(
+  Dice= c(1:5, 7,10,15,20,30,40),
+  `At least 1` = 1-pbinom(0, size=c(1:5, 7,10,15,20,30,40), prob=1/6),
+  `At least 2` = 1-pbinom(1, size=c(1:5, 7,10,15,20,30,40), prob=1/6),
+  `At least 4` = 1-pbinom(3, size=c(1:5, 7,10,15,20,30,40), prob=1/6)
+) %>% 
+  pivot_longer(-Dice, names_to = "Criterion", values_to = "Probability")
+
+# Actual data from class in 2024
+N <- 42
+real <- read_csv("DiceResponse_2025.csv") 
+real %>% 
+  pivot_wider(names_from = Criterion, values_from = Infected) %>% 
+  knitr::kable()
+```
+
+Here are those data plotted on two different types of axes, a linear x-axis (left) and a logarithmic x-axis (right). The theoretical expectations, which we would expect to converge on if we did this with hundreds or thousands of students, is shown in a dotted line. 
+```{r fig.fullwidth = TRUE, fig.width=10, fig.height=4}
+linear <- 
+ggplot(real, aes(x=Dice, y=Infected/N, color = Criterion)) + 
+  geom_point() + geom_line() +
+  geom_line(data=theory, aes(y=Probability), linetype=2) + 
+  scale_x_continuous(breaks = unique(real$Dice)) + 
+  scale_y_continuous("Proportion infected")
+
+logarithmic <- 
+  ggplot(real, aes(x=Dice, y=Infected/N, color = Criterion)) + 
+  geom_point() + geom_line() +
+  geom_line(data=theory, aes(y=Probability), linetype=2) + 
+  scale_x_log10(breaks = unique(real$Dice)) + 
+  scale_y_continuous("Proportion infected")
+
+ggarrange(linear, logarithmic, ncol = 2, nrow=1, common.legend = T)
+```
+
+The logarithmic axis gives more of a sigmoidal relationship. This because while the linear x-axis (left) preserves numbers---the distance between 1 and 2 is the same as the distance between 20 and 21---the logarithmic x-axis (right) preserves proportionality---the distance between 1 and 2, a doubling, is the same as the distance between 5 and 10 or 10 and 20, which are both doubling. Usually we see notable changes in the probability of infection with increasing orders of magnitude of the dose of exposure. So you will usually see logarithmic x-axes. 
+
+## The probability of infections, theoretically.
+
+It is not very hard to calculate the probability of infection given the dose, $d$, of parasites one is being exposed to (here, the number of dice rolled) if we know the probability of infection, $\phi$, for each parasite (or die, here $\phi = 1/6$) and are willing to assume that those parasites each act independently of each other. The problem is the "at least one" part of our definition of infection. We need to account for all of the possible outcomes without double-counting. 
+
+Consider rolling just two dice. There are three possible outcomes and we need to account for each of their probabilities:
+
+*  **6 and not 6** , which occurs with probability $\left( \frac{1}{6} \right)\left( \frac{5}{6} \right) = \frac{5}{36}$
+*  **not 6 and 6** , which occurs with probability $\left( \frac{5}{6} \right)\left( \frac{1}{6} \right) = \frac{5}{36}$
+* **6 and 6**, which occurs with probability $\left( \frac{1}{6} \right)\left( \frac{1}{6} \right)  = \frac{1}{36}$
+
+We can then add up those probabilities to get the total probability of getting at least one six ($=\frac{11}{36}$). 
+
+This gets harder when we roll more dice, though. A single 6 could occur in the first die, the second, the third, ..., up to the last, but then there could be a pair involving the first and second, the first and third, the first and fourth, and so on, and we haven't even considered the probabilities of triples or quadruples and so on. Thankfully, there's a much easier way to think about this. 
+
+We can simply find the probability of getting zero 6's, that is, of not being infected, and then subtract that from one to find the probability of rolling at least one 6, which is to be infected. The probability not being infected by a single die is $1-\frac{1}{6} = \frac{5}{6}$ and the probability of failing to be infected by _both_ dice is $\left( \frac{5}{6} \right)\left( \frac{5}{6} \right) = \frac{25}{36}$. If that is the probability of _not_ being infected, then the probability of being infected is $1-\frac{25}{36} = \frac{11}{36}$. We can extend this to any $d$ dice (or parasites) with any probability, $\phi$, of success (or infection)^[This is for the discrete case, with countable parasites. In the real world we often have concentrations or we might think of $\phi$ as a rate of infection and we include a time component, $t$. Then this becomes $$
+\Pr(\text{infection}) = 1-e^{-\phi d t}.
+$$]:
+$$
+\Pr(\text{infection}) = 1-(1-\phi)^d.
+$$
+That is what the red lines show on the graphs. 
+
+The other two cases are _slightly_ trickier because "failure" to infect can be a single 6 (for $\geq 2$ 6's) or one, two, or three 6's (for $\geq 4$ 6's). We use a binomial distribution to figure this out which, in the case of the $\geq 4$ 6's rule, ends up looking something like:
+$$
+\Pr(\text{infection}) = 1-\sum_{i=0}^{i=3} {{d}\choose{i} } \phi^i (1-\phi)^{d-i}
+$$
+
+It's a bit ugly, but we have computers that can do this. 

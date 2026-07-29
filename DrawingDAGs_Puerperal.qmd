@@ -1,0 +1,42 @@
+---
+title: "Drawing DAGs: puerperal fever"
+#author: "Jesse Brunner"
+# date: "`r Sys.Date()`"
+format:
+  pdf: default
+  html: 
+    self-contained: true
+    grid:
+      margin-width: 350px
+format-links: false
+execute:
+  echo: false
+toc: false
+reference-location: margin
+---
+
+
+# Drawing DAGs
+Allow me to repeat myself: DAGs can be a wonderfully useful tool for thinking about causation. We're going to practice with the puerperal fever example we have just read about. I would like you to, _at the whiteboard_, draw the DAG for Ignaz Semmelweis' understanding of puerperal fever in the maternity ward^[Not how we, in modern times, would view it.]. 
+
+Here are a list of the variables (nodes) of interest. Please use them to draw a DAG
+
+* Bleach water
+* Cadaver particles on hands
+* Doctor's vs. midwives ward
+* Puerperal fever
+* Childbirth
+* Doctor laziness
+* Autopsies conducted
+
+Here are some hints and reminders:
+
+* The variables or "nodes" represent things that you could potentially measure or states of the system (e.g., "temperature" or "disease")
+    - they are not processes (i.e., not "infection", but "infection status")
+    - amounts of something  (i.e., not "increased temperature," but "temperature")
+* The arrows represent causation, such that $x \rightarrow y$ reads as, "a change in $x$ _causes_ a change in $y$"
+    - the arrows do not mean "increase" or "decrease" (i.e.,  $x$ could be increased or decreased and $y$ would respond accordingly)
+* It can be helpful to work backwards with the effect (e.g., if "infection status" is the effect of interest, then ask, what things control whether an individual is infected or not?)
+
+
+
