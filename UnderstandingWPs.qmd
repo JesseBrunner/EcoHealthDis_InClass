@@ -1,0 +1,68 @@
+---
+title: "Understanding the WPs"
+#author: "Jesse Brunner"
+# date: "`r Sys.Date()`"
+format:
+  pdf: default
+  html: 
+    self-contained: true
+    grid:
+      margin-width: 350px
+format-links: false
+execute:
+  echo: false
+toc: false
+reference-location: margin
+---
+
+While I give a lot of guidance about what the WP is for and what I am looking for in it, I have been asked many, many times by students for examples or activities to help them understand what this is all about. So here's my stab at it. 
+
+These activities are based around the NPR Planet Money Podcast episode, "Fabricated data in research about honesty. You can't make this stuff up. Or, can you?" ([link](https://www.npr.org/2023/07/27/1190568472/dan-ariely-francesca-gino-harvard-dishonesty-fabricated-data)), which you were to read before class. I have activities around two writing prompts I might have used. 
+
+# Prompt 1
+
+Imagine the prompt was, "Why was the researchers' story—that signing forms first makes people answer the form more honest—so convincing?"
+
+Here are some sentences from my response to this prompt, in random order:
+
+  * Collectively, the evidence of this particular "nudge" seemed compelling.
+  * They (Ariely and colleagues) conducted several experiments in a variety of settings, from math tests to self-reporting mileage on insurance forms, all of which suggested a consistent and strong effect of this intervention. 
+  * The study on self-reporting milage had a large sample size and seemed to come from a "real world" setting, which lent credibility to the effect. 
+  * Researchers and journalists were convinced by Dan Ariely and colleagues'  numerous and varied studies showing that simple "nudges," such as requiring people to sign forms before filling them out, could make large differences in how  honestly people behaved. 
+  * They (Ariely and colleagues) suggested a simple, plausible explanation for this effect: being reminded of the morality of being truthfully before answering questions primes people to answer more honestly, whereas those reminded after filling out a form might simply justify their answers as "close enough." 
+
+First, put an asterisk next to the topic sentence that makes it most clear what I am arguing.
+
+Second, in each sentence, sort out which of the BHC I am addressing. 
+
+Third, please re-order them so that they make the most compelling argument.  
+
+# Prompt the second
+
+Imagine the prompt was instead, "What made people change their minds about the researchers' story?"
+
+Again, here are a number of sentences in semi-random order from my own response to the prompt. However, I have removed transitions and pronouns so that the ordering is less clear, and added a number of extraneous sentences that either do not make the case as strongly or that simply cloud the logic and clarity of the argument. Your job is simply to 1) use some subset of these sentences to assemble a strong, clear, concise argument about the evidence and then 2) add in any transitions or pronouns, or make any other changes needed, to smooth the flow.
+
+  * The car insurance study was clearly fabricated.
+  * The researchers became very famous from these studies, which meant that they were not willing to admit they were wrong.
+  * Several researchers found that they could not reproduce results similar to the original studies, which called into question the consistency of the putative effect.
+  * Collectively this was incredibly strong evidence that the original research results were in fact a fabrication.
+  *  No one was able to replicate the original research, which suggests that it might have been fabricated rather than just wrong. 
+  * There was a very large effect of the changes in the results spreadsheet from the math problem study.
+  * The Data Colada group  found an electronic trail of data manipulation in a spreadsheet from an experiment involving students doing math problems, where cells were moved between groups to inflate the effect size. 
+  * There is a function in Excel that produces random numbers that are evenly spread from a low number to a high number provided by the user.
+  * This simple story about the effect of this nudge, and even the honesty of the researchers, was called into questions as other researchers found they could not replicate the work and began to look for problems in the original data.
+  * The patterns in the data from the car insurance study that would be implausible with a real experiment, but was very consistent with fabricating data. 
+  * The Data Colada group found that the milage reported in the researcher's study was very fine-grained, which would be unusual for humans, but very consistent with a spreadsheet function to produce random data.
+  * A very large-scale study using 3 million taxpayers in Guatemala showed no effect at all of the signing intervention.
+  * The researchers admitted to lying about where they got the data.
+  * Dan Ariely claims that the milage data spreadsheet was provided to him with these oddities included in it, but that is not credible.
+  * There was a lack of coherence between lines of evidence that suggested a problem with the researcher's story.
+  * The Data Colada group analyzed the original data sets and found evidence of data manipulation.
+  * Excel keeps track of the changes a person makes in a spreadsheet.
+  * The Data Colada group found that the distribution of miles reported in the original "data" was essentially a flat line that cut off right at 50,000 miles, which would be incredibly unusual for real data.
+  * People lost faith in the researchers' study because there was no plausible mechanism for how they got their data.
+  * People changed their minds about the researcher's story because there was evidence of fraud.
+  * The story about the positive effects of "nudges," such as requiring people to sign forms before filling them out, was undermined by the Data Colada group.
+  * Even the original authors could not replicate their own study.
+
