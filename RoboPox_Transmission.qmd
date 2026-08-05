@@ -1,35 +1,28 @@
 ---
-title: "How does transmission scale with density? The case of robopox"
-author: "Jesse Brunner (inspired by a lab by [David Civitello](https://www.esa.org/disease/resources/syllabi/))"
-date: "`r Sys.Date()`"
-output: tint::tintPdf
-latexfonts:
-  - package: newtxmath
-    options: 
-      - cmintegrals
-      - cmbraces
-  - package: ebgaramond-maths
-header-includes:
-   - \usepackage{booktabs}
-   - \usepackage{cancel}
+title: "How does transmission scale with density?"
+subtitle: "The case of robopox^[Inspired by a lab by [David Civitello](https://www.esa.org/disease/resources/syllabi/)]"
+author-meta: "Jesse Brunner"
+date-meta: "`r Sys.Date()`"
+format:
+  pdf: default
+  html: 
+    self-contained: true
+    grid:
+      margin-width: 350px
+format-links: false
+execute:
+  echo: false
+toc: false
+reference-location: margin
 ---
 
-```{r setup, include=FALSE}
-library(tufte)
-# invalidate cache when the tufte version changes
-knitr::opts_chunk$set(tidy = FALSE, 
-                      message = FALSE, 
-                      warning = FALSE,
-                      echo = FALSE,
-                      cache.extra = packageVersion('tufte'))
-options(htmltools.dir.version = FALSE)
-```
+
 
 ```{r, include=FALSE}
 library(tidyverse)
 # library(scales) # for prettier axis labels
 # library(simecol) # for running model 
-# theme_set(theme_minimal())
+theme_set(theme_minimal())
 ```
 
 # What's at the heart of transmission rates?
@@ -55,7 +48,10 @@ We will conduct the experiment in short order, but first, what are your predicti
 
 Go ahead and draw your prediction on the axes provided on the next page, and label them "prediction". Be sure to think about _why_ you expect these results.
 
-```{r, fig.fullwidth = TRUE}
+```{r}
+#| fig-column: page-right
+
+
 df <- tibble(Density = c(0,40),
              Contacts = c(0,40))
 

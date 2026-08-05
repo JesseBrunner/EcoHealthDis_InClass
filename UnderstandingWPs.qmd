@@ -1,7 +1,7 @@
 ---
 title: "Understanding the WPs"
-#author: "Jesse Brunner"
-# date: "`r Sys.Date()`"
+author-meta: "Jesse Brunner"
+date-meta: "`r Sys.Date()`"
 format:
   pdf: default
   html: 

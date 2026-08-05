@@ -1,27 +1,20 @@
 ---
 title: "Dice and dose-response relationships"
-output: tint::tintPdf
-latexfonts:
-  - package: newtxmath
-    options: 
-      - cmintegrals
-      - cmbraces
-  - package: ebgaramond-maths
-header-includes:
-   - \usepackage{booktabs}
-   - \usepackage{cancel}
+author-meta: "Jesse Brunner"
+date-meta: "`r Sys.Date()`"
+format:
+  pdf: default
+  html: 
+    self-contained: true
+    grid:
+      margin-width: 350px
+format-links: false
+execute:
+  echo: false
+toc: false
+reference-location: margin
 ---
 
-```{r setup, include=FALSE}
-library(tufte)
-# invalidate cache when the tufte version changes
-knitr::opts_chunk$set(tidy = FALSE, 
-                      message = FALSE, 
-                      warning = FALSE,
-                      echo = FALSE,
-                      cache.extra = packageVersion('tufte'))
-options(htmltools.dir.version = FALSE)
-```
 
 ```{r, include=FALSE}
  library(tidyverse)
@@ -40,14 +33,18 @@ Dose-response relationships frequently show up in biological (and other) systems
 
 In fact, draw graphs of those relationships. Add labels (including units if you can) and put reasonable numbers on the two axes. 
 
-```{r, fig.height=3}
+```{r}
+#| fig-column: page-right
+#| fig-height: 3
+#| fig-width: 9
+#| fig-alt: "Four sets of blank axes to use to draw dose response relationships"
 p <- ggplot(tibble(x=0:1, y=0:1), aes(x,y)) + 
   geom_blank() + 
   theme(text = element_blank(), 
         aspect.ratio = 1
         )
 
-ggarrange(p,p,p,p, labels = 1:4, nrow = 2, ncol=2)
+ggarrange(p,p,p,p, labels = 1:4, nrow = 1, ncol=4, spacing = 0.5)
 
 ```
 
@@ -64,7 +61,10 @@ We will also consider two other scenarios: one where _two_ sixes in a roll are n
 Before we start rolling our dice, I would like you to sketch out on the axes below your expectation for what these data are going to look like for each criterion for a successful infection. Be sure to think about what you will see for each of our criteria for success.
 
 
-```{r, include=FALSE}
+```{r}
+#| include: false
+
+
 # Actual data from class in 2024
 real <- tibble(
   N = 38,
@@ -121,9 +121,11 @@ ggplot(df, aes(Dice, Prob)) +
 
 Do your data look like what you expected? Why? What fits your expectation and what is a surprise?
 
-\newpage
+\vspace{0.25cm}
+
 Now plot the same data on the _logarithmic_ x-axis, below. Note that distance along the x-axis now reflects _proportional_ increases (e.g., doubling is always the same) rather than the increases in number. 
 ```{r}
+#| message: false
 last_plot() + 
   scale_x_log10("Dice rolled", 
                 breaks = df$Dice, 

@@ -1,32 +1,25 @@
 ---
 title: "Heads, you're dead"
-# author: "Jesse Brunner"
-# date: "`r Sys.Date()`"
-output: tint::tintPdf
-latexfonts:
-  - package: newtxmath
-    options: 
-      - cmintegrals
-      - cmbraces
-  - package: ebgaramond-maths
-header-includes:
-   - \usepackage{booktabs}
-   - \usepackage{cancel}
-   - \usepackage[version=4]{mhchem}
+author-meta: "Jesse Brunner"
+date-meta: "`r Sys.Date()`"
+format:
+  pdf: default
+  html: 
+    self-contained: true
+    grid:
+      margin-width: 350px
+format-links: false
+execute:
+  echo: false
+toc: false
+reference-location: margin
 ---
 
-```{r setup, include=FALSE}
-library(tufte)
-# invalidate cache when the tufte version changes
-knitr::opts_chunk$set(tidy = FALSE, 
-                      message = FALSE, 
-                      warning = FALSE,
-                      echo = FALSE,
-                      cache.extra = packageVersion('tufte'))
-options(htmltools.dir.version = FALSE)
-```
 
-```{r, include=FALSE}
+```{r}
+#| include: false
+
+
 library(tidyverse)
 library(scales) # for prettier axis labels
 library(ggpubr)
@@ -35,7 +28,9 @@ theme_set(theme_minimal())
 ```
 
 
-```{r playground, include=FALSE}
+```{r playground}
+#| include: false
+
 
 df <- tibble(x=0:10, 
              lx=0.5^x, #coin flip survival part
@@ -107,7 +102,13 @@ $m_x$ is the _fecundity_, the average number of offspring produced by a live ind
 
 With the survivorship data in hand, plot $n_x$ against $x$ on these two sets of axes:
 
-```{r, fig.width = 10, fig.height = 6, fig.fullwidth = TRUE}
+```{r}
+#| fig-column: page-right
+#| fig-width: 10
+#| fig-height: 6
+#| message: false
+
+
 dat <- tibble(x=c(0,10), 
               nx=c(1,100)
 )

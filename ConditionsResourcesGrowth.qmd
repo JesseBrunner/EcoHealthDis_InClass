@@ -1,37 +1,20 @@
 ---
 title: "Population growth under less than ideal circumstances"
-# author: "Jesse Brunner"
-# date: "`r Sys.Date()`"
-output: tint::tintPdf
-latexfonts:
-  - package: newtxmath
-    options: 
-      - cmintegrals
-      - cmbraces
-  - package: ebgaramond-maths
-header-includes:
-   - \usepackage{booktabs}
-   - \usepackage{cancel}
-   - \usepackage[version=4]{mhchem}
+author-meta: "Jesse Brunner"
+date-meta: "`r Sys.Date()`"
+format:
+  pdf: default
+  html: 
+    self-contained: true
+    grid:
+      margin-width: 350px
+format-links: false
+execute:
+  echo: false
+toc: false
+reference-location: margin
 ---
 
-```{r setup, include=FALSE}
-library(tufte)
-# invalidate cache when the tufte version changes
-knitr::opts_chunk$set(tidy = FALSE, 
-                      message = FALSE, 
-                      warning = FALSE,
-                      echo = FALSE,
-                      cache.extra = packageVersion('tufte'))
-options(htmltools.dir.version = FALSE)
-```
-
-```{r, include=FALSE}
-library(tidyverse)
-library(scales) # for prettier axis labels
-# library(simecol) # for running model 
-theme_set(theme_minimal())
-```
 
 One of our goals in this class is to make connections between topics or ideas. We have considered both resources and conditions as being important to organisms. We have contrasted them and we have connected them to the idea of a niche. But how, dear student, do these ideas connect to our model(s) of population growth?
 

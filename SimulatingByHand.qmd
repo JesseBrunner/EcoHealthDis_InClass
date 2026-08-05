@@ -1,34 +1,20 @@
 ---
 title: "Demystifying the epidemic model"
-output: tint::tintHtml
-latexfonts:
-  - package: newtxmath
-    options: 
-      - cmintegrals
-      - cmbraces
-  - package: ebgaramond-maths
-header-includes:
-   - \usepackage{booktabs}
-   - \usepackage{cancel}
+author-meta: "Jesse Brunner"
+date-meta: "`r Sys.Date()`"
+format:
+  pdf: default
+  html: 
+    self-contained: true
+    grid:
+      margin-width: 350px
+format-links: false
+execute:
+  echo: false
+toc: false
+reference-location: margin
 ---
 
-```{r setup, include=FALSE}
-library(tufte)
-# invalidate cache when the tufte version changes
-knitr::opts_chunk$set(tidy = FALSE, 
-                      message = FALSE, 
-                      warning = FALSE,
-                      echo = FALSE,
-                      cache.extra = packageVersion('tufte'))
-options(htmltools.dir.version = FALSE)
-```
-
-```{r, include=FALSE}
-library(tidyverse)
-library(scales) # for prettier axis labels
-library(simecol) # for running model 
-theme_set(theme_minimal())
-```
 
 Mathematical models often seem like magic. As a consequence, when we see an equation we might think, _oh no! I can't do this!_ or _skip to the good stuff_ or similar. Today I would like to disabuse you of this notion that models are magic. Tedious? Sure! Indeed, that's what computers are for. But magic? No!
 
@@ -37,7 +23,14 @@ Today our goal is to understand what the computers are doing in the background w
 # The model
 
 
-```{r boxarrowseq, fig.margin = TRUE, echo=FALSE, message=FALSE, fig.width = 4, fig.height = 3}
+```{r boxarrowseq}
+#| echo: false
+#| message: false
+#| fig-width: 4
+#| fig-height: 3
+#| fig-column: page-right
+
+
 library(diagram)
 
 openplotmat()
@@ -82,6 +75,7 @@ $$
 \phi &= \hspace{2cm} (0 \leq \phi \leq 1)
 \end{aligned}
 $$
+
 We will use these parameters as well as the following starting values for this exercise. We will assume a population of $S=100$ susceptible individuals at time $t=0$ and no recovered and thus resistant individuals ($R=0$). Further, let's assume that a single infected individual rides into town ($I=1$). 
 
 # Simulating, slowly
@@ -90,18 +84,18 @@ The thing about our model, above, is that it does _not_ tells us how many $S$, $
 
 There is one little caveat: These are differential equations, which assume that everything happens all the time, instantaneously. We, however, have to deal in discrete time steps. We will revisit this, but for now let's just proceed in one-day increments. OK?
 
-So, beginning with our starting values ($S=100$, $I=1$, and $R=0$) let us figure out how many $S$, $I$, and $R$ we have at time 1, then time 2, and time 3. 
+So, beginning with our starting values ($S=100$, $I=1$, and $R=0$) let us figure out how many $S$, $I$, and $R$ we have at time 1, then time 2, and time 3 and 4. 
 
-\begin{table}[]
-\begin{tabular}{lllllllll}
-Time & S   & I & R &  & I/N   & gain in I & loss of I & newly recovered \\
-0    & 100 & 1 & 0 &  & 1/101 &           &           &                 \\
-1    &     &   &   &  &       &           &           &                 \\
-2    &     &   &   &  &       &           &           &                 \\
-3    &     &   &   &  &       &           &           &                 \\
-     &     &   &   &  &       &           &           &                
-\end{tabular}
-\end{table}
+| Time | S   | I | R | N   | I/N   | gain in I | loss of I | newly recovered |
+|------|-----|---|---|-----|-------|-----------|-----------|-----------------|
+| 1    | 100 | 1 | 0 | 101 | 1/101 |           |           |                 |
+|      |     |   |   |     |       |           |           |                 |
+| 2    |     |   |   |     |       |           |           |                 |
+|      |     |   |   |     |       |           |           |                 |
+| 3    |     |   |   |     |       |           |           |                 |
+|      |     |   |   |     |       |           |           |                 |
+| 4    |     |   |   |     |       |           |           |                 |
+|      |     |   |   |     |       |           |           |                 |
 
 
 Let's start with the gain in infections, shall we? This happens at rate $\beta\frac{I}{N}S$. Well, we have all these numbers! You chose $\beta$ and I gave you $I/N = 1/101$ and $S=100$. So the new infections produced in the time step from time 0 to time 1 is $\beta \frac{1}{101}\times 100$. Calculate this number for whatever value of $\beta$ you chose and write this in the "gain in I" column. 
