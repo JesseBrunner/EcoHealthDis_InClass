@@ -1,5 +1,5 @@
 ---
-title: "Drawing DAGs: puerperal fever"
+title: "Mapping interventions to model terms"
 author-meta: "Jesse Brunner"
 date-meta: "`r Sys.Date()`"
 format:

@@ -1,5 +1,5 @@
 ---
-title: "Dice and dose-response relationships"
+title: "Dice and dose-response relationships: infections"
 author-meta: "Jesse Brunner"
 date-meta: "`r Sys.Date()`"
 format:
@@ -24,37 +24,13 @@ theme_set(theme_classic())
 library(ggpubr)
 ```
 
-Dose-response relationships frequently show up in biological (and other) systems. Indeed, I bet you can think of at least four _different_ ways some _response_ changes with the dose of some _cause_. Let's write those down:
-
-1.   
-2.   
-3.  
-4.  
-
-In fact, draw graphs of those relationships. Add labels (including units if you can) and put reasonable numbers on the two axes. 
-
-```{r}
-#| fig-column: page-right
-#| fig-height: 3
-#| fig-width: 9
-#| fig-alt: "Four sets of blank axes to use to draw dose response relationships"
-p <- ggplot(tibble(x=0:1, y=0:1), aes(x,y)) + 
-  geom_blank() + 
-  theme(text = element_blank(), 
-        aspect.ratio = 1
-        )
-
-ggarrange(p,p,p,p, labels = 1:4, nrow = 1, ncol=4, spacing = 0.5)
-
-```
-
-It's good to keep this diversity in mind if only so that you don't make the mistake of assuming every dose-response relationship means the same thing.
+We have seen dose-response relationships in several contexts, from fertilizing with limiting nutrients increasing growth rates to increasing doses of toxins overwhelming an individual's capacity to tolerate it. Today we will think about dose-responses in pathogen or parasite infections^[The logic also holds for other cases where each challenge from something---a spark that might light a fire, a hit to the head that might cause a traumatic brain injury---has a small, independent chance of causing a catastrophe.]. 
 
 # Dice as pathogens
 
 To develop a more intuitive sense of at least one way we can get a dose-response relationship, let's roll some dice. I like thinking about pathogens, so let's imagine that we are the hosts and each die is a single pathogen. A pathogen/die only causes an infection if it comes up a "6", otherwise you fight it off. We are going to simulate exposures to different doses of pathogens/dice to see how the probability of infection changes with the dose.
 
-Of course a single host is either infected or uninfected, so a single person's data would like a series of zeros and ones. We want to determine what the _probability_ of infection is at different doses, which we can estimate as the _proportion_ of hosts^[Students rolling dice.] that are infected^[Roll at least one 6.] at each dose.
+Of course a single host is either infected or uninfected, so a single person's data would either be a zero or a one (or a series of zeros and ones with repeated exposures). We want to determine what the _probability_ of infection is at different doses, which we can estimate as the _proportion_ of hosts^[Students rolling dice.] that are infected^[Roll at least one 6.] at each dose.
 
 We will also consider two other scenarios: one where _two_ sixes in a roll are needed to cause an infection and one where _four_ are needed. 
 
@@ -134,3 +110,7 @@ last_plot() +
 ```
 
 Does this pattern fit your expectations better? Worse? 
+
+# Useful and not
+
+As always, our little toy model is useful in some ways and not-so-useful in other ways. Think about what was useful for helpful about this activity and what is missing, inaccurate, misleading, or otherwise not so helpful.

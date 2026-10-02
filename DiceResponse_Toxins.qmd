@@ -1,0 +1,138 @@
+---
+title: "Dice and dose-response relationships: toxins"
+author-meta: "Jesse Brunner"
+date-meta: "`r Sys.Date()`"
+format:
+  pdf: default
+  html: 
+    self-contained: true
+    grid:
+      margin-width: 350px
+format-links: false
+execute:
+  echo: false
+toc: false
+reference-location: margin
+---
+
+
+```{r, include=FALSE}
+ library(tidyverse)
+# library(scales) # for prettier axis labels
+# library(simecol) # for running model 
+theme_set(theme_classic())
+library(ggpubr)
+```
+
+Dose-response relationships frequently show up in biological (and other) systems. Indeed, I bet you can think of at least four _different_ ways some _response_ changes with the dose of some _cause_. Let's write those down:
+
+1.   
+2.   
+3.  
+4.  
+
+In fact, draw graphs of those relationships. Add labels (including units if you can) and put reasonable numbers on the two axes. 
+
+```{r}
+#| fig-column: page-right
+#| fig-height: 3
+#| fig-width: 9
+#| fig-alt: "Four sets of blank axes to use to draw dose response relationships"
+p <- ggplot(tibble(x=0:1, y=0:1), aes(x,y)) + 
+  geom_blank() + 
+  theme(text = element_blank(), 
+        aspect.ratio = 1
+        )
+
+ggarrange(p,p,p,p, labels = 1:4, nrow = 1, ncol=4, spacing = 0.5)
+
+```
+
+It's good to keep this diversity in mind if only so that you don't make the mistake of assuming every dose-response relationship means the same thing.
+
+# Dice determining susceptibility
+
+To develop a more intuitive sense of at least one way we can get a dose-response relationship, let's roll some dice. 
+
+Imagine that each die represents some component of the mechanism(s) that help you remove, inactivate, repair damage from, or otherwise tolerate some toxin X^[Imagine something specific if it helps, but it is not necessary for our little game.]. For each die/component you might have a low (1) or high (6) value, or anything in between. The sum of values across all of your dice/mechanisms determines your _tolerance_ of the toxin. That is, it determines how much exposure you can tolerate before you succumb. 
+
+Here we go:
+
+  1. Please roll 10 dice and add up the numbers. Write that down here: ______
+  2. Divide that number by 10 and write it down here: _____ _<--This is your susceptibility_
+
+
+```{r simulating the activity}
+#| include: false
+nstudents <- 50
+ndice <- 10
+
+# Simulate dice rolls
+sum_dice <- numeric()
+for(i in 1:nstudents){
+  sum_dice[i] <- sum( sample(1:6, ndice, replace = T) )  
+}
+
+# calculate susceptibility
+suscept <- sum_dice/ndice
+
+stem(suscept)
+hist(suscept, breaks = 7)
+
+cumsum( table(suscept) )/nstudents
+
+# now a dose-response design with these orders of magnitude
+doses <- c(2, 2.5, 3, 3.5, 4, 4.5, 5)
+
+# how many students would be infected at each dose?
+infected <- numeric()
+
+for(i in 1:length(doses)){
+  infected[i] <- sum(suscept <= doses[i])
+}
+
+plot( infected/nstudents ~ doses, type = "b")
+```
+
+
+# A dose-response experiment
+
+At this point, every person in class should have their own (hidden) level of susceptibility. _I_, the experimenter, do not know anyone's susceptibility to toxin X, nor do even know anything useful like the average susceptibility of the class or the LD~50~. Let's see how I can use a dose-response study to figure out some of this.
+
+Imagine I exposed the class to a particular dose of toxin X. I could see how many individuals (or the fraction of individuals) that _responded_ to the exposure (i.e., died if that was our outcome of interest). That could then be plotted on the axes, below. The position along the x-axis is the dose and the position on the y-axis is the proportion of the class that responded. 
+
+
+```{r}
+df <- tibble(Log10Dose = c(2, 2.5, 3, 3.5, 4, 4.5, 5),
+             Dose = 10^Log10Dose,
+             Prop = c(0, 0.05, 0.15, 0.4, 0.8, 0.9, 1))
+
+ggplot(df, aes(Dose, Prop)) + 
+  # geom_point() + 
+  geom_blank() + 
+  scale_x_log10("Exposure Dose", 
+                     breaks = df$Dose,
+                     minor_breaks = NULL, 
+                label = scales::label_log()
+                ) + 
+  scale_y_continuous("Proportion of the class that respond", 
+                     limits = c(0,1),
+                     breaks = 0:10/10) + 
+  theme_bw()
+```
+
+Let's try this. I will expose the class to the dose and you simply raise your hand if you would respond to this dose. You should respond only if the _exponent_ of the dose (i.e., the 2.5 in a dose 10^2.5^) is _higher_ than your tolerance (the number you wrote above).
+
+
+|                Dose | 10^2^ | 10^2.5^ | 10^3^ | 10^3.5^ | 10^4^ | 10^4.5^ | 10^5^ |
+|--------------------:|:-----:|:-------:|:-----:|:-------:|:-----:|:-------:|:-----:|
+| Number of responses |       |         |       |         |       |         |       |
+
+
+Now let's plot these data. 
+
+Do they look like what you expected? What would happen if we repeated this "experiment"? Would we get the same or similar results? Why?
+
+# Useful and not
+
+As always, our little toy model is useful in some ways and not-so-useful in other ways. Think about what was useful for helpful about this activity and what is missing, inaccurate, misleading, or otherwise not so helpful.
