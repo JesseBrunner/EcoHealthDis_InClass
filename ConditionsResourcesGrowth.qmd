@@ -44,7 +44,7 @@ Our goal today is to sort out some of this on the whiteboard and in our heads.
 2. Now think about whether the response you are drawing (y-axis) is more closely related to the intrinsic growth rate or "carrying capacity". 
 3. Finally, draw a graph showing three otherwise identical populations, growing logistically over time ($N(t)$ against $t$) at either a low, moderate, or high levels of this macronutrient. 
 
-`r newthought("Is there a simple relationship")` between conditions and $r$ or $k$? Between resources and $r$ or $k$? 
+Is there a simple relationship between conditions and $r$ or $k$? Between resources and $r$ or $k$? 
 
 
 # Niches and population growth

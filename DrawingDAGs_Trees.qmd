@@ -22,9 +22,15 @@ In his piece, [How Public Health Took Part in Its Own Downfall](https://wsu.inst
 
 # Draw a DAG about the factors that influence heat-related illness and deaths
 
-\vspace{7cm}
+\vspace{5cm}
+
+# Draw graphs showing the relationships
+
+Each arrow represents some causal relationship between the variable upstream and that downstream. The arrows, however, do not represent any particular shape to that relationship (e.g., increasing, decreasing, sigmoidal, accelerating, hump-shaped). 
+
+I would like you to draw a graph showing the hypothetical relationship between the upstream variable (x-axis) and the downstream variable (y-axis). If there are other factors that cause that downstream variable and _modify_ the relationship between the upstream and downstream variable (e.g., another arrow into the downstream arrow^[This is getting tedious... I should have used $x$ and $y$!] that interacts with the upstream-downstream relationship), go ahead and account for that with different lines (e.g., one for low income, one for high income). The more specific you can make these graphs, the better.
 
 # Use your DAG as a tool
 
-Now, imagine you are responsible for the public health of a metropolitan area that is expected to face more and more severe heat waves. Given your understanding of causation in this system, which 1--2 things would you try to change? Based on your DAG, what advantages or problems might you face?
+Now, imagine you are responsible for the public health of a metropolitan area that is expected to face more and more severe heat waves. Given your understanding of causation in this system, which 1--2 things would you try to change? Why? Based on your DAG and graphs, what advantages or problems might you face?
 

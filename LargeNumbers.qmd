@@ -1,5 +1,5 @@
 ---
-title: "Some perspective on large numbersr"
+title: "Some perspective on large numbers"
 author-meta: "Jesse Brunner"
 date-meta: "`r Sys.Date()`"
 format:
@@ -19,7 +19,7 @@ reference-location: margin
 
 Let's be honest: it can be hard to have an intuitive sense of large numbers. In an evolutionary sense, we were never exposed to numbers more than dozens or hundreds, and so we never got good at thinking with such large numbers^[Not until the invention of mathematics beyond simply counting anyway!]  After a certain number of zeros, everything gets compressed in our thinking to "big"! A million? A billion? A trillion? They're just much larger than I can count. Or are they?
 
-Have you ever tried counting to a million? I'm guessing you have better things to do with your time, but using the power of Math~TM~ we could figure out how long it would take if you _did_ count to a million, and a billion, and so on. So let's figure this out. 
+Have you ever tried counting to a million? I'm guessing you have better things to do with your time, but using the power of Math^TM^ we could figure out how long it would take if you _did_ count to a million, and a billion, and so on. So let's figure this out. 
 
 # Once per second
 
@@ -43,7 +43,7 @@ Then please repeat the calculation for a billion and a trillion, converting to u
 
 I agree, you can probably count faster than one number second (up to a point anyway). So let's see how much you can reduce this time to count to a million.
 
-`r newthought("Please time yourself counting")` from one to one-hundred. Then convert that into a value for $\text{seconds}/\text{number}$. Now redo the calculation for how long it would take you to count to a million if you were able to keep up this same pace. 
+Please time yourself counting from one to one-hundred. Then convert that into a value for $\text{seconds}/\text{number}$. Now redo the calculation for how long it would take you to count to a million if you were able to keep up this same pace. 
 \vspace{2cm}
 
 # Now a billion
@@ -87,7 +87,7 @@ Repeat the calculations assuming the population grows to ten-billion virions. Or
 
 # A final challenge
 
-Now let's consider the number of cells in a human newborn baby. I found an [estimate](https://bionumbers.hms.harvard.edu/bionumber.aspx?id=106413&ver=4)^[Apparently based on a pretty old paper, so_ caveat emptor_] of $1.25 \times 10^{12}$ cells. We also know that the newborn began from a single cell roughly nine months earlier. So... if we assume that the cells all divide in two, in discrete steps^[This is only true for a little while, but let's run with this assumption.], how many _times_ does that one cell need to divide to produce the 1.25 trillion it is born with?
+Now let's consider the number of cells in a human newborn baby. I found an [estimate](https://bionumbers.hms.harvard.edu/bionumber.aspx?id=106413&ver=4)^[Apparently based on a pretty old paper, so _caveat emptor_] of $1.25 \times 10^{12}$ cells. We also know that the newborn began from a single cell roughly nine months earlier. So... if we assume that the cells all divide in two, in discrete steps^[This is only true for a little while, but let's run with this assumption.], how many _times_ does that one cell need to divide to produce the 1.25 trillion it is born with?
 
 It may be helpful to recall this equation:
 
