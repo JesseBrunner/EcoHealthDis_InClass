@@ -48,10 +48,10 @@ The rule for _survival_ are simple:
 * Each time step we will flip all "living" coins one time
 * Any coin that has its head up is "dead"^[A coin can only die once (i.e., once it's dead, it isn't flipped any more)]
 
-The rule for _fecundity_ are not to bad either:
+The rule for _fecundity_ are not bad either:
 
 * For each surviving coin, you will roll one die to determine if you reproduce
-* If you roll a number that is $\leq x$, where $x$ is the time step, you reproduce. If not, you do not reproduce in that time step.
+* If you roll a number that is $\leq x$, where $x$ is the time step, you reproduce. If not, you do not reproduce in that time step. So if it is time step 3 and you role a 3 or lower, you reproduce, if instead you roll a 4, 5, or 6, you wouldn't.
 * If you reproduce, roll again to determine how large your clutch is
 
 
@@ -105,7 +105,7 @@ With the survivorship data in hand, plot $n_x$ against $x$ on these two sets of 
 ```{r}
 #| fig-column: page-right
 #| fig-width: 10
-#| fig-height: 6
+#| fig-height: 7
 #| message: false
 
 

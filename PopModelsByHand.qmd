@@ -27,13 +27,13 @@ Mathematical models can seem like magic. Let's see if we cannot gain some intuit
 
 # The models
 
-Again, we have two equations: The exponential model (left) and the logistic model (right)
+Again, we have two equations: The exponential model (left) and the logistic model (right) that describe how the population grows as a function of population size^[Or population density. It doesn't matter so long as you're consistent], $N$.
 
 $$
 \frac{dN}{dt} = rN \hspace{3cm} \frac{dN}{dt} = rN\left( 1-\frac{N}{k} \right)
 $$
 
-We can divide both sides by $N$ to get the per capita growth rate in each
+We can divide both sides by $N$ to get the _per capita_ growth rate^[Think of this as the average individual's contribution to population growth rate. If per capita growth rate is zero, each individual just replaces itself.] in each model
 
 $$
 \begin{aligned}
@@ -43,14 +43,14 @@ $$
 $$
 Let's choose some values for $r$ and $k$. 
 
-$r =$ _________  
+$r =$ _________  (Keep $r$ small, like $0 < r \leq 2$)
 
-$k =$ _________ 
+$k =$ _________ (Make $k$ big, $400 \leq k \leq 1000$)
 
 Then fill in the table, below.
 
 \newpage
-| N    | (dN/dt)/N exponential | dN/dt exponential | (dN/dt)/N logistic | dN/dt logistic |
+| N    | exponential (dN/dt)/N  | exponential dN/dt  | logistic (dN/dt)/N  | logistic dN/dt  |
 |------|---------------------|-------------------|------------------|----------------|
 | 0    |                     |                   |                  |                |
 |      |                     |                   |                  |                |
@@ -76,9 +76,12 @@ Then fill in the table, below.
 |      |                     |                   |                  |                |
 | 1100 |                     |                   |                  |                |
 
-Then we can graph these numbers...
+Then we will graph these numbers...
 
-```{r, fig.height=7.5}
+```{r}
+#| fig-height: 7.5
+#| fig-width: 8
+#| fig-column: page-right
 df <- tibble(N = 0:11 * 100, 
              dN = 2*N,
              dN_N = 2 - 2/1000 * N) 
@@ -99,10 +102,14 @@ bottom <- ggplot(df, aes(N, dN)) +
 ggpubr::ggarrange(top, bottom, nrow = 2)
 ```
 
-\newpage
-Then we can use these numbers to figure out the population size over time, $N(t)$. Let's fill out the table. Remember, what we have in the next time step is what we had in _this_ time step plus however much the population grows^[This is approximately true when the time steps are small. It's fine for our purposes].
+Where does per capita growth rate equal zero? Where does population growth rate equal zero? Do you understand why?
 
-| t  | N(t) \hspace{0.5cm} | dN/dt \hspace{0.5cm}|   | N(t) \hspace{0.5cm}| dN/dt \hspace{0.5cm} |
+\newpage
+Next, let's track how the size^[Or density] of a population, $N(t)$, changes over time. Let's fill out the table. 
+
+Remember, what we have in the next time step is what we had in _this_ time step plus however much the population grows^[This is approximately true when the time steps are very small. We are using somewhat course time steps, which means that our answers will diverge from what you would get if you plugged in numbers into the _solutions_, such as $N(t) = N_0 e^{rt}. We are doing this to learn and understand, rather than for precision, so please do it step by step by hand. ].
+
+| t  | N(t) | dN/dt=rN|   | N(t) | dN/dt=rN(1-N/K)  |
 |----|------|-------|---|------|-------|
 | 0  |  100 |       |   |  100 |       |
 |    |      |       |   |      |       |
@@ -127,8 +134,11 @@ Then we can use these numbers to figure out the population size over time, $N(t)
 | 10 |      |       |   |      |       |
 |    |      |       |   |      |       |
 
-And plot the results
+And then plot the results
 ```{r}
+#| fig-height: 7.5
+#| fig-width: 8
+#| fig-column: page-right
 tibble(time = c(0,10), 
        N = c(1,1100) ) %>% 
   ggplot(., aes(x=time, y=N)) + 
